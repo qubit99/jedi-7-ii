@@ -3,6 +3,7 @@ const Breweries = async () => {
     res = await fetch('https://api.openbrewerydb.org/breweries?by_city=san_diego').then(res => res.json());
     console.log(res);
 }
+// comments by pranay
 
 const showBreweries = async () => {
 
