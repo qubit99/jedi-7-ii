@@ -4,11 +4,14 @@ import java.util.List;
 
 public class Professor extends User{
 
+    private PersonalDetails pd;
     private String department;
     private String designation;
 
-    public Professor(String name, String userId, String password, String role, String department, String designation) {
-        super(name, userId, password, role);
+
+    public Professor(String userId, String password, String role, PersonalDetails pd, String department, String designation) {
+        super(userId, password, role);
+        this.pd = pd;
         this.department = department;
         this.designation = designation;
     }

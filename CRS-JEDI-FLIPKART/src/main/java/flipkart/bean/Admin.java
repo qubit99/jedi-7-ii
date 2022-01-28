@@ -2,7 +2,10 @@ package flipkart.bean;
 
 public class Admin extends User {
 
-    public Admin(String name, String userId, String password, String role) {
-        super(name, userId, password, role);
+    private PersonalDetails pd;
+
+    public Admin(String userId, String password, String role, PersonalDetails pd) {
+        super(userId, password, role);
+        this.pd = pd;
     }
 }
