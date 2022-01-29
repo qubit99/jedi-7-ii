@@ -1,4 +1,4 @@
-package flipkart.bean;
+package com.crs.flipkart.bean;
 
 import java.util.ArrayList;
 

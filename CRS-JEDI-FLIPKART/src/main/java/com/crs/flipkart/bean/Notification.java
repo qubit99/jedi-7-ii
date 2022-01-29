@@ -1,4 +1,4 @@
-package flipkart.bean;
+package com.crs.flipkart.bean;
 
 public class Notification {
 
@@ -6,6 +6,12 @@ public class Notification {
     private String message;
     private String extras;
 
+    /**
+     *
+     * @param studentId
+     * @param message
+     * @param extras
+     */
     public Notification(String studentId, String message, String extras) {
         super();
         this.studentId = studentId;

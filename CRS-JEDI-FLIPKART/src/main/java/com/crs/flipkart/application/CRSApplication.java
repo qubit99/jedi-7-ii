@@ -1,4 +1,4 @@
-package flipkart.application;
+package com.crs.flipkart.application;
 
 import java.util.Scanner;
 

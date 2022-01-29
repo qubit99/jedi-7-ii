@@ -1,4 +1,4 @@
-package flipkart.bean;
+package com.crs.flipkart.bean;
 
 public class Grade {
     private int studentId;

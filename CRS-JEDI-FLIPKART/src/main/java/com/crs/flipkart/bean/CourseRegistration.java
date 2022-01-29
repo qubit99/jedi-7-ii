@@ -1,4 +1,4 @@
-package flipkart.bean;
+package com.crs.flipkart.bean;
 
 public class CourseRegistration {
 
@@ -6,6 +6,11 @@ public class CourseRegistration {
     private Course[] secondaryCourses;
     private String semester;
 
+    /**
+     *
+     * @param primaryCourses
+     * @param secondaryCourses
+     */
     public CourseRegistration(Course[] primaryCourses, Course[] secondaryCourses) {
         super();
         this.primaryCourses = primaryCourses;
