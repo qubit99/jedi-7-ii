@@ -2,13 +2,14 @@ package flipkart.bean;
 
 public class Student extends User {
 
+    private PersonalDetails pd;
     private String rollNo;
     private String department;
     private String yearOfJoining;
 
-
-    public Student(String name, String userId, String password, String role, String rollNo, String department, String yearOfJoining) {
-        super(name, userId, password, role);
+    public Student(String userId, String password, String role, PersonalDetails pd, String rollNo, String department, String yearOfJoining) {
+        super(userId, password, role);
+        this.pd = pd;
         this.rollNo = rollNo;
         this.department = department;
         this.yearOfJoining = yearOfJoining;
@@ -36,5 +37,13 @@ public class Student extends User {
 
     public void setYearOfJoining(String yearOfJoining) {
         this.yearOfJoining = yearOfJoining;
+    }
+
+    public PersonalDetails getPd() {
+        return pd;
+    }
+
+    public void setPd(PersonalDetails pd) {
+        this.pd = pd;
     }
 }
