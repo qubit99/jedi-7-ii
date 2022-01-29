@@ -1,4 +1,4 @@
-package flipkart.bean;
+package com.crs.flipkart.bean;
 
 public class Course {
 
@@ -6,6 +6,12 @@ public class Course {
     private String courseId;
     private String instructor;
 
+    /**
+     *
+     * @param courseId
+     * @param courseName
+     * @param instructor
+     */
     public Course(String courseId, String courseName, String instructor) {
         super();
         this.courseName = courseName;

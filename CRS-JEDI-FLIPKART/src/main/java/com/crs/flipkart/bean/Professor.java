@@ -1,6 +1,4 @@
-package flipkart.bean;
-
-import java.util.List;
+package com.crs.flipkart.bean;
 
 public class Professor extends User{
 
@@ -8,7 +6,15 @@ public class Professor extends User{
     private String department;
     private String designation;
 
-
+    /**
+     *
+     * @param userId
+     * @param password
+     * @param role
+     * @param pd
+     * @param department
+     * @param designation
+     */
     public Professor(String userId, String password, String role, PersonalDetails pd, String department, String designation) {
         super(userId, password, role);
         this.pd = pd;
