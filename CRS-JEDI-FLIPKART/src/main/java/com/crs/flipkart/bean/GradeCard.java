@@ -3,6 +3,12 @@ package com.crs.flipkart.bean;
 import java.util.ArrayList;
 
 public class GradeCard {
+    private String studentId;
+    private int semester;
+    private float sgpa;
+    private boolean published;
+    private ArrayList<Grade> gradeInCourse;
+
     public String getStudentId() {
         return studentId;
     }
@@ -35,17 +41,11 @@ public class GradeCard {
         this.published = published;
     }
 
-    public ArrayList<Course> getRegisteredCourse() {
-        return registeredCourse;
+    public ArrayList<Grade> getGradeInCourse() {
+        return gradeInCourse;
     }
 
-    public void setRegisteredCourse(ArrayList<Course> registeredCourse) {
-        this.registeredCourse = registeredCourse;
+    public void setGradeInCourse(ArrayList<Grade> gradeInCourse) {
+        this.gradeInCourse = gradeInCourse;
     }
-
-    private String studentId;
-    private int semester;
-    private float sgpa;
-    private boolean published;
-    private ArrayList<Course> registeredCourse;
 }
