@@ -1,16 +1,16 @@
 package com.crs.flipkart.bean;
 
 public class Grade {
-    private int studentId;
+    private String studentId;
     private int semester;
     private Course course;
     private int grade;
 
-    public int getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 
