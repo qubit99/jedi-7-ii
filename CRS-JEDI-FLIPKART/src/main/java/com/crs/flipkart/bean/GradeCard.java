@@ -3,11 +3,11 @@ package com.crs.flipkart.bean;
 import java.util.ArrayList;
 
 public class GradeCard {
-    public int getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 
@@ -43,7 +43,7 @@ public class GradeCard {
         this.registeredCourse = registeredCourse;
     }
 
-    private int studentId;
+    private String studentId;
     private int semester;
     private float sgpa;
     private boolean published;
