@@ -1,9 +1,8 @@
-package flipkart.client;
-
-import java.util.*;
+package com.crs.flipkart.client;
 
 public class Main {
     public static void main(String[] args) {
+
         System.out.println("hello, world");
     }
 }

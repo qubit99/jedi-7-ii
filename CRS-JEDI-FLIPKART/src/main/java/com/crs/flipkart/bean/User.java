@@ -1,26 +1,20 @@
-package flipkart.bean;
+package com.crs.flipkart.bean;
 
 public class User {
 
-    private String name;
+
     private String userId;
     private String password;
     private String role;
 
-    public User(String name, String userId, String password, String role) {
-        this.name = name;
+    public User(String userId, String password, String role) {
+
         this.userId = userId;
         this.password = password;
         this.role = role;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getUserId() {
         return userId;
