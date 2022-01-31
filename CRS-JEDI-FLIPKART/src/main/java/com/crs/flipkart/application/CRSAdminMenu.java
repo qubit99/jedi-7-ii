@@ -22,7 +22,38 @@ public class CRSAdminMenu {
         System.out.println("Enter 8 to exit");
 
         int choice;
+        do {
+            choice = scanner.nextInt();
+            if(choice==1) {
+                System.out.println("Displaying all Courses: ");
+            }
+            else if(choice==2) {
+                System.out.println("Add new course: ");
+                System.out.println("enter course id: ");
 
+            }
+            else if(choice==3) {
+                System.out.println("Drop course: ");
+                System.out.println("enter course id: ");
+            }
+            else if(choice==4) {
+
+            }
+            else if(choice==5) {
+
+            }
+            else if(choice==6) {
+
+            }
+            else if(choice==7) {
+
+            }
+            else if(choice==8) {
+                break;
+            }
+        } while(true);
+
+        System.out.println("Returning to the main menu");
 
         System.out.println(adminId);
     }
