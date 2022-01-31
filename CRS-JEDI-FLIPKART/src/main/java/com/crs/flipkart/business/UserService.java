@@ -6,8 +6,6 @@ import java.util.Map;
 
 public class UserService implements UserInterface{
 
-    private UserService(){}
-
     /**
      *
      * @param userId
@@ -48,6 +46,7 @@ public class UserService implements UserInterface{
 
     @Override
     public String getRole(String userId) {
-        return DummyDB.userList.get(userId).getRole();
+        String role = DummyDB.userList.get(userId).getRole();
+        return role;
     }
 }
