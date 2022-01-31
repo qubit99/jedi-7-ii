@@ -10,12 +10,20 @@ public class AdminService implements AdminInterface{
 
     @Override
     public String addProfessor(Professor professor) {
-        return null;
+        DummyDB.professorList.put("P#", professor);
+        return professor.getPd().getName()+"added";
     }
 
     @Override
     public String removeProfessor(int professorId) {
-        return null;
+        if(DummyDB.professorList.containsKey(professorId)){
+            DummyDB.professorList.remove(professorId);
+            return "prof removed";
+        }
+        else{
+            return "Prof with given prof id not found";
+        }
+
     }
 
     @Override

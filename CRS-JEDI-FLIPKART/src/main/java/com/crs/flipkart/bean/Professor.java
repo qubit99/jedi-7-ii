@@ -37,4 +37,12 @@ public class Professor extends User{
     public void setDesignation(String designation) {
         this.designation = designation;
     }
+
+    public PersonalDetails getPd() {
+        return pd;
+    }
+
+    public void setPd(PersonalDetails pd) {
+        this.pd = pd;
+    }
 }

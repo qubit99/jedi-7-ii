@@ -40,6 +40,17 @@ public class DummyDB {
                 new PersonalDetails("Archit", "8910482988", "Kolkata" ),
                 "22004", "IT", "2018"));
 
+        professorList.put("P3", new Professor("P3", "password","professor",
+                new PersonalDetails("Amit Balyan", "9830058945", "Bangalore"),
+                "CSE", "HOD"));
+        professorList.put("P4", new Professor("P4", "password","professor",
+                new PersonalDetails("HC Verma", "9830068945", "Kanpur"),
+                "Physics", "Assistant Professor"));
+
+        adminList.put("A1", new Admin("A1", "password","admin",
+                new PersonalDetails("Admin Sahab", "9830058905", "Bangalore")));
+
+
 
 
     }
