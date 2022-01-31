@@ -6,6 +6,10 @@ public class CRSAdminMenu {
     Scanner scanner = new Scanner(System.in);
 
     public void CRSAdminMenu(String adminId) {
+
+    }
+
+    public void adminChoice(String adminId) {
         System.out.println("=====Admin Menu=====");
         System.out.println("You have the following choices: ");
         System.out.println("Enter 1 to view all courses");
@@ -16,9 +20,7 @@ public class CRSAdminMenu {
         System.out.println("Enter 6 to remove student");
         System.out.println("Enter 7 to remove professor");
         System.out.println("Enter 8 to exit");
-    }
 
-    public void adminChoice(String adminId) {
         System.out.println(adminId);
     }
 

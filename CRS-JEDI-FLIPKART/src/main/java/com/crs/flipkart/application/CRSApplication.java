@@ -1,5 +1,8 @@
 package com.crs.flipkart.application;
 
+import com.crs.flipkart.bean.PersonalDetails;
+import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.bean.User;
 import com.crs.flipkart.business.DummyDB;
 import com.crs.flipkart.business.UserService;
 import com.crs.flipkart.exception.UserNotFoundException;
@@ -34,7 +37,7 @@ public class CRSApplication {
                 break;
             }
             client.mainMenu();
-        } while (choice!=3);
+        } while (true);
 
         System.out.println("Thank you!");
     }
@@ -68,6 +71,7 @@ public class CRSApplication {
             }
             else if(role.equals("student")) {
                 CRSStudentMenu clientStudent = new CRSStudentMenu();
+                clientStudent.studentChoice(userId);
             }
             else if(role.equals("professor")) {
                 CRSProfessorMenu clientProf = new CRSProfessorMenu();
@@ -82,11 +86,51 @@ public class CRSApplication {
 
     public void registerNew() {
         System.out.println("=====New Student Registration=====");
+        Student newStudent = new Student(null, null, "student", null, null, null, null);
+        PersonalDetails newPd = new PersonalDetails(null, null, null);
 
+        System.out.println("enter name: ");
+        newPd.setName(scanner.next());
+        System.out.println("enter phone number: ");
+        newPd.setPhoneNo(scanner.next());
+        System.out.println("enter address: ");
+        newPd.setAddress(scanner.next());
+        newStudent.setPd(newPd);
+
+        System.out.println("enter id: ");
+        newStudent.setUserId(scanner.next());
+        System.out.println("enter password: ");
+        newStudent.setPassword(scanner.next());
+        System.out.println("enter roll no: ");
+        newStudent.setRollNo(scanner.next());
+        System.out.println("enter department: ");
+        newStudent.setDepartment(scanner.next());
+        System.out.println("enter year of joining: ");
+        newStudent.setYearOfJoining(scanner.next());
+
+        DummyDB.userList.put(newStudent.getUserId(), newStudent);
     }
 
     public void updatePassword() {
         System.out.println("=====Password Update=====");
+        System.out.println("enter user id");
+        String userId = scanner.next();
+        System.out.println("enter your old password");
+        String userPass = scanner.next();
 
+        UserService user = new UserService();
+
+        try {
+            user.verifyCredentials(userId, userPass);
+            System.out.println("enter new password");
+            String newPass = scanner.next();
+            if(user.updatePassword(userId, userPass, newPass)) {
+                System.out.println("password updated successfully!");
+            }
+        } catch (UserNotFoundException u){
+            System.out.println("User not found");
+        } catch (WrongPasswordException p){
+            System.out.println("Password wrong");
+        }
     }
 }
