@@ -43,7 +43,7 @@ public class DummyDB {
                 new PersonalDetails("Archit", "8910482988", "Kolkata" ),
                 "22004", "IT", "2018"));
 
-        professorList = new HashMap<String , Professor>();
+        professorList = new HashMap<String, Professor>();
         professorList.put("P3", new Professor("P3", "password","professor",
                 new PersonalDetails("Amit Balyan", "9830058945", "Bangalore"),
                 "CSE", "HOD"));

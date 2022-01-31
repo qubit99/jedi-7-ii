@@ -8,8 +8,7 @@ import java.util.Map;
 
 public class UserService implements UserInterface{
 
-
-    public UserService(){
+    public UserService() {
 
     }
 
