@@ -21,6 +21,9 @@ public class CRSAdminMenu {
         System.out.println("Enter 7 to remove professor");
         System.out.println("Enter 8 to exit");
 
+        int choice;
+
+
         System.out.println(adminId);
     }
 

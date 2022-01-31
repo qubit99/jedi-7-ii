@@ -4,6 +4,7 @@ import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 import com.crs.flipkart.business.DummyDB;
+import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
 import com.crs.flipkart.exception.UserNotFoundException;
 import com.crs.flipkart.exception.WrongPasswordException;
@@ -58,7 +59,7 @@ public class CRSApplication {
         System.out.println("Enter your password: ");
         String userPass = scanner.next();
 
-        UserService user = new UserService();
+        UserInterface user = new UserService();
 
         try {
             user.verifyCredentials(userId, userPass);
@@ -118,7 +119,7 @@ public class CRSApplication {
         System.out.println("enter your old password");
         String userPass = scanner.next();
 
-        UserService user = new UserService();
+        UserInterface user = new UserService();
 
         try {
             user.verifyCredentials(userId, userPass);
