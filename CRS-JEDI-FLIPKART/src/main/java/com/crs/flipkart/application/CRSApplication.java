@@ -1,6 +1,7 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.business.DummyDB;
+import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
 import com.crs.flipkart.exception.UserNotFoundException;
 import com.crs.flipkart.exception.WrongPasswordException;
@@ -18,7 +19,7 @@ public class CRSApplication {
         System.out.println("Exit: 3");
         Scanner sc = new Scanner(System.in);
 
-        UserService userService = new UserService();
+        UserInterface userService = new UserService();
 
         while(true){
             System.out.print("Enter Choice: ");
