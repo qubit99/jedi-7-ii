@@ -12,7 +12,8 @@ public class DummyDB {
     public static Map<String, Student>studentList;
     public static Map<String , Professor>professorList;
     public static Map<String , Admin>adminList;
-    public static Map<String , Course>courseList;
+    public static HashMap<String , Course>courseList;
+
 
     public static void createDatabase(){
 
@@ -59,6 +60,7 @@ public class DummyDB {
         temp.add(studentList.get("S7"));
         courseList.put("C1", new Course("C1", "Automata and Compiler", "Amit Balyan", temp));
 
-
     }
 }
+
+
