@@ -2,7 +2,9 @@ package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DummyDB {
@@ -12,6 +14,7 @@ public class DummyDB {
     public static Map<String , Professor>professorList;
     public static Map<String , Admin>adminList;
     public static Map<String , Course>courseList;
+
 
     public static void createDatabase(){
 
@@ -40,6 +43,7 @@ public class DummyDB {
                 new PersonalDetails("Archit", "8910482988", "Kolkata" ),
                 "22004", "IT", "2018"));
 
+        professorList = new HashMap<String , Professor>();
         professorList.put("P3", new Professor("P3", "password","professor",
                 new PersonalDetails("Amit Balyan", "9830058945", "Bangalore"),
                 "CSE", "HOD"));
@@ -47,11 +51,18 @@ public class DummyDB {
                 new PersonalDetails("HC Verma", "9830068945", "Kanpur"),
                 "Physics", "Assistant Professor"));
 
+        adminList = new HashMap<String, Admin>();
         adminList.put("A1", new Admin("A1", "password","admin",
                 new PersonalDetails("Admin Sahab", "9830058905", "Bangalore")));
 
-
+        courseList = new HashMap<String,Course>();
+        List<Student> temp = new ArrayList<Student>();
+        temp.add(studentList.get("S8"));
+        temp.add(studentList.get("S7"));
+        courseList.put("C1", new Course("C1", "Automata and Compiler", "Amit Balyan", temp));
 
 
     }
 }
+
+
