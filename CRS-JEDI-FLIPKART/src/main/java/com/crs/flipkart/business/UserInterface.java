@@ -1,5 +1,8 @@
 package com.crs.flipkart.business;
 
+import com.crs.flipkart.exception.UserNotFoundException;
+import com.crs.flipkart.exception.WrongPasswordException;
+
 public interface UserInterface {
 
     /**
@@ -18,7 +21,7 @@ public interface UserInterface {
      * @param password
      * @return
      */
-    public boolean verifyCredentials(String userId, String password);
+    public boolean verifyCredentials(String userId, String password) throws UserNotFoundException, WrongPasswordException;
 
     /**
      *

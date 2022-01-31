@@ -1,14 +1,19 @@
 package com.crs.flipkart.application;
 
-import com.crs.flipkart.business.UserInterface;
+import com.crs.flipkart.business.DummyDB;
 import com.crs.flipkart.business.UserService;
+import com.crs.flipkart.exception.UserNotFoundException;
+import com.crs.flipkart.exception.WrongPasswordException;
 
 import java.util.Scanner;
 
 public class CRSApplication {
+
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        DummyDB.createDatabase();
+
         CRSApplication client = new CRSApplication();
         client.mainMenu();
         int choice;
@@ -46,16 +51,16 @@ public class CRSApplication {
     public void login() {
         System.out.println("=====Login=====");
         System.out.println("Enter your user id: ");
-        String userId = scanner.nextLine();
-        scanner.nextLine();
+        String userId = scanner.next();
         System.out.println("Enter your password: ");
-        String userPass = scanner.nextLine();
+        String userPass = scanner.next();
 
-        UserInterface user = new UserService();
+        UserService user = new UserService();
 
-        if(user.verifyCredentials(userId, userPass)) {
-            String role = user.getRole(userId);
+        try {
+            user.verifyCredentials(userId, userPass);
             System.out.println("login successful!");
+            String role = user.getRole(userId);
             System.out.println("Role: "+role);
             if(role.equals("admin")) {
                 CRSAdminMenu clientAdmin = new CRSAdminMenu();
@@ -68,9 +73,10 @@ public class CRSApplication {
                 CRSProfessorMenu clientProf = new CRSProfessorMenu();
 
             }
-        }
-        else {
-            System.out.println("incorrect id or password");
+        } catch (UserNotFoundException u){
+            System.out.println("User not found");
+        } catch (WrongPasswordException p){
+            System.out.println("Password wrong");
         }
     }
 

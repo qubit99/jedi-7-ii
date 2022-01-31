@@ -1,10 +1,16 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.User;
+import com.crs.flipkart.exception.UserNotFoundException;
+import com.crs.flipkart.exception.WrongPasswordException;
 
 import java.util.Map;
 
 public class UserService implements UserInterface{
+
+    public UserService() {
+
+    }
 
     /**
      *
@@ -40,13 +46,18 @@ public class UserService implements UserInterface{
      * @return
      */
     @Override
-    public boolean verifyCredentials(String userId, String password) {
-        return DummyDB.userList.containsKey(userId) && DummyDB.userList.get(userId).getPassword().equals(password);
+    public boolean verifyCredentials(String userId, String password) throws UserNotFoundException, WrongPasswordException {
+        if(DummyDB.userList.containsKey(userId)==false){
+            throw new UserNotFoundException();
+        }
+        else if(!DummyDB.userList.get(userId).getPassword().equals(password)){
+            throw new WrongPasswordException();
+        }
+        return true;
     }
 
     @Override
     public String getRole(String userId) {
-        String role = DummyDB.userList.get(userId).getRole();
-        return role;
+        return DummyDB.userList.get(userId).getRole();
     }
 }
