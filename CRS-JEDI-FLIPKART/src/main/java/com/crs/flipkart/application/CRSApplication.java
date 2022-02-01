@@ -9,15 +9,23 @@ import com.crs.flipkart.business.UserInterface;
 import com.crs.flipkart.business.UserService;
 import com.crs.flipkart.exception.UserNotFoundException;
 import com.crs.flipkart.exception.WrongPasswordException;
+import com.crs.flipkart.utils.DBUtils;
+import org.apache.log4j.Logger;
+import org.apache.log4j.BasicConfigurator;
 
+import java.sql.Connection;
 import java.util.Scanner;
 
 public class CRSApplication {
 
     public static Scanner scanner = new Scanner(System.in);
+    private static Logger logger = Logger.getLogger(CRSApplication.class);
 
     public static void main(String[] args) {
         DummyDB.createDatabase();
+        BasicConfigurator.configure();
+
+        Connection connection = DBUtils.getConnection();
 
         CRSApplication client = new CRSApplication();
         client.mainMenu();
@@ -25,7 +33,7 @@ public class CRSApplication {
 
         do {
             choice = scanner.nextInt();
-            System.out.println("You entered: "+choice);
+            logger.info("You entered: "+choice);
             if(choice==1) {
                 client.login();
             }
@@ -41,32 +49,32 @@ public class CRSApplication {
             client.mainMenu();
         } while (true);
 
-        System.out.println("Thank you!");
+        logger.info("Thank you!");
     }
 
     public void mainMenu() {
-        System.out.println("=====CRS Application=====");
-        System.out.println("You have the following choices: ");
-        System.out.println("Enter 1 for login");
-        System.out.println("Enter 2 for new student registration");
-        System.out.println("Enter 3 to update password");
-        System.out.println("Enter 4 to exit");
+        logger.info("=====CRS Application=====");
+        logger.info("You have the following choices: ");
+        logger.info("Enter 1 for login");
+        logger.info("Enter 2 for new student registration");
+        logger.info("Enter 3 to update password");
+        logger.info("Enter 4 to exit");
     }
 
     public void login() {
-        System.out.println("=====Login=====");
-        System.out.println("Enter your user id: ");
+        logger.info("=====Login=====");
+        logger.info("Enter your user id: ");
         String userId = scanner.next();
-        System.out.println("Enter your password: ");
+        logger.info("Enter your password: ");
         String userPass = scanner.next();
 
         UserInterface user = new UserService();
 
         try {
             user.verifyCredentials(userId, userPass);
-            System.out.println("login successful!");
+            logger.info("login successful!");
             String role = user.getRole(userId);
-            System.out.println("Role: "+role);
+            logger.info("Role: "+role);
             if(role.equals("admin")) {
                 CRSAdminMenu clientAdmin = new CRSAdminMenu();
                 clientAdmin.adminChoice(userId);
@@ -80,59 +88,59 @@ public class CRSApplication {
 
             }
         } catch (UserNotFoundException u){
-            System.out.println("User not found");
+            logger.error(u.getMessage());
         } catch (WrongPasswordException p){
-            System.out.println("Password wrong");
+            logger.error(p.getMessage());
         }
     }
 
     public void registerNew() {
-        System.out.println("=====New Student Registration=====");
+        logger.info("=====New Student Registration=====");
         Student newStudent = new Student(null, null, "student", null, null, null, null);
         PersonalDetails newPd = new PersonalDetails(null, null, null);
 
-        System.out.println("enter name: ");
+        logger.info("enter name: ");
         newPd.setName(scanner.next());
-        System.out.println("enter phone number: ");
+        logger.info("enter phone number: ");
         newPd.setPhoneNo(scanner.next());
-        System.out.println("enter address: ");
+        logger.info("enter address: ");
         newPd.setAddress(scanner.next());
         newStudent.setPd(newPd);
 
-        System.out.println("enter id: ");
+        logger.info("enter id: ");
         newStudent.setUserId(scanner.next());
-        System.out.println("enter password: ");
+        logger.info("enter password: ");
         newStudent.setPassword(scanner.next());
-        System.out.println("enter roll no: ");
+        logger.info("enter roll no: ");
         newStudent.setRollNo(scanner.next());
-        System.out.println("enter department: ");
+        logger.info("enter department: ");
         newStudent.setDepartment(scanner.next());
-        System.out.println("enter year of joining: ");
+        logger.info("enter year of joining: ");
         newStudent.setYearOfJoining(scanner.next());
 
         DummyDB.userList.put(newStudent.getUserId(), newStudent);
     }
 
     public void updatePassword() {
-        System.out.println("=====Password Update=====");
-        System.out.println("enter user id");
+        logger.info("=====Password Update=====");
+        logger.info("enter user id");
         String userId = scanner.next();
-        System.out.println("enter your old password");
+        logger.info("enter your old password");
         String userPass = scanner.next();
 
         UserInterface user = new UserService();
 
         try {
             user.verifyCredentials(userId, userPass);
-            System.out.println("enter new password");
+            logger.info("enter new password");
             String newPass = scanner.next();
             if(user.updatePassword(userId, userPass, newPass)) {
-                System.out.println("password updated successfully!");
+                logger.info("password updated successfully!");
             }
         } catch (UserNotFoundException u){
-            System.out.println("User not found");
+            logger.info("User not found");
         } catch (WrongPasswordException p){
-            System.out.println("Password wrong");
+            logger.info("Password wrong");
         }
     }
 }
