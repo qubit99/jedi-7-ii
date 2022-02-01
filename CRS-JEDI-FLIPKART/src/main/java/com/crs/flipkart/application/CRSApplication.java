@@ -8,6 +8,8 @@ import com.crs.flipkart.exception.WrongPasswordException;
 import java.util.Scanner;
 
 public class CRSApplication {
+    public static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
         DummyDB.createDatabase();
