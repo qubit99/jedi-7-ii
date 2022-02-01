@@ -3,11 +3,19 @@ package com.crs.flipkart.business;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.dao.AdminDaoInterface;
+import com.crs.flipkart.dao.AdminDaoOperation;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class AdminService implements AdminInterface{
+
+    private static Logger logger = Logger.getLogger(AdminService.class);
+
+    AdminDaoInterface adminDaoOperation =new AdminDaoOperation();
 
     @Override
     public String addProfessor(Professor professor) {
@@ -53,11 +61,7 @@ public class AdminService implements AdminInterface{
     }
 
     @Override
-    public ArrayList<Course> viewAllCourses() {
-        ArrayList<Course> courseList = new ArrayList<Course>();
-        for(Course course: DummyDB.courseList.values()){
-            courseList.add(course);
-        }
-        return courseList;
+    public List<Course> viewAllCourses() {
+        return adminDaoOperation.viewAllCourses();
     }
 }

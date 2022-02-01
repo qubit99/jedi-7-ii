@@ -1,27 +1,26 @@
 package com.crs.flipkart.bean;
 
-import java.util.ArrayList;
 
 public class Course {
 
     private String courseName;
     private String courseId;
     private String instructor;
-    private ArrayList<Student> enrolledStudent;
+
+    public Course() {
+    }
 
     /**
      *
      * @param courseId
      * @param courseName
      * @param instructor
-     * @param enrolledStudent
      */
-    public Course(String courseId, String courseName, String instructor, ArrayList<Student> enrolledStudent) {
+    public Course(String courseId, String courseName, String instructor) {
         super();
         this.courseName = courseName;
         this.courseId = courseId;
         this.instructor = instructor;
-        this.enrolledStudent = enrolledStudent;
     }
 
     public String getCourseName() {
@@ -30,6 +29,9 @@ public class Course {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
+
+
+
     public String getCourseId() {
         return courseId;
     }
@@ -41,12 +43,6 @@ public class Course {
     }
     public void setInstructor(String instructor) {
         this.instructor = instructor;
-    }
-    public ArrayList<Student> getEnrolledStudent() {
-        return enrolledStudent;
-    }
-    public void setEnrolledStudent(ArrayList<Student> enrolledStudent) {
-        this.enrolledStudent = enrolledStudent;
     }
 
 }

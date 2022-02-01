@@ -7,6 +7,7 @@ import com.crs.flipkart.business.DummyDB;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class CRSAdminMenu {
@@ -35,7 +36,7 @@ public class CRSAdminMenu {
             choice = scanner.nextInt();
             if(choice==1) {
                 System.out.println("Displaying all Courses: ");
-                ArrayList<Course> courses = adminService.viewAllCourses();
+                List<Course> courses = adminService.viewAllCourses();
                 for(Course course : courses){
                     System.out.println(course.getCourseName());
                 }

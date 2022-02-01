@@ -58,8 +58,7 @@ public class DummyDB {
         ArrayList<Student> temp = new ArrayList<Student>();
         temp.add(studentList.get("S8"));
         temp.add(studentList.get("S7"));
-        courseList.put("C1", new Course("C1", "Automata and Compiler", "Amit Balyan", temp));
-        courseList.put("C2", new Course("C2", "Operating Systems", "Pranay", temp));
+
 
     }
 }

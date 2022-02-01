@@ -75,7 +75,7 @@ public class CRSApplication {
             logger.info("login successful!");
             String role = user.getRole(userId);
             logger.info("Role: "+role);
-            if(role.equals("admin")) {
+            if(role.equals("Admin")) {
                 CRSAdminMenu clientAdmin = new CRSAdminMenu();
                 clientAdmin.adminChoice(userId);
             }
