@@ -5,6 +5,7 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AdminService implements AdminInterface{
 
@@ -38,7 +39,12 @@ public class AdminService implements AdminInterface{
 
     @Override
     public ArrayList<Student> viewAllStudents() {
-        return null;
+        ArrayList<Student> studentList = new ArrayList<Student>();
+        for(Student student: DummyDB.studentList.values()){
+            studentList.add(student);
+        }
+        return studentList;
+
     }
 
     @Override
@@ -48,6 +54,10 @@ public class AdminService implements AdminInterface{
 
     @Override
     public ArrayList<Course> viewAllCourses() {
-        return null;
+        ArrayList<Course> courseList = new ArrayList<Course>();
+        for(Course course: DummyDB.courseList.values()){
+            courseList.add(course);
+        }
+        return courseList;
     }
 }

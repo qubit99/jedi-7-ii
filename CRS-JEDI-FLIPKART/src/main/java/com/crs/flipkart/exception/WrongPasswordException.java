@@ -6,5 +6,4 @@ public class WrongPasswordException extends Exception{
     public WrongPasswordException(){
         System.out.println("Wrong Password");
     }
-
 }

@@ -9,6 +9,7 @@ import com.crs.flipkart.exception.ProfessorNotFoundException;
 import com.crs.flipkart.exception.UserNotFoundException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,16 +22,16 @@ public class ProfessorService {
      * @param profid
      * @return List of courses professor is teaching
      */
-    public List<Course> viewTeachingCourses(String profid) throws ProfessorNotFoundException {
-        Map<String, List<Course>> courseList = DummyDB.courseList;
-        if(courseList.containsKey(profid)){
-            return courseList.get(profid);
-        }
-        else if(courseList.containsKey(profid)==false){
-            throw new ProfessorNotFoundException();
-        }
-        return null;
-    }
+//    public List<Course> viewTeachingCourses(String profid) throws ProfessorNotFoundException {
+//        HashMap<String, Course> courseList = DummyDB.courseList;
+//        if(courseList.containsKey(profid)){
+//            return courseList.get(profid);
+//        }
+//        else if(courseList.containsKey(profid)==false){
+//            throw new ProfessorNotFoundException();
+//        }
+//        return null;
+//    }
 
     /**
      * Function to view enrolled students for a course
