@@ -8,12 +8,10 @@ public interface UserInterface {
     /**
      *
      * @param userId
-     * @param oldPassword
      * @param newPassword
-     * @return boolean
-     * @throws
+     * @return
      */
-    public boolean updatePassword(String userId, String oldPassword, String newPassword);
+    public boolean updatePassword(String userId, String newPassword);
 
     /**
      *

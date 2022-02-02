@@ -5,6 +5,7 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface AdminInterface {
 
@@ -41,5 +42,5 @@ public interface AdminInterface {
 
     public ArrayList<Professor> viewAllProfessors();
 
-    public ArrayList<Course> viewAllCourses();
+    public List<Course> viewAllCourses();
 }
