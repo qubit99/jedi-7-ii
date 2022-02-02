@@ -8,10 +8,9 @@ public class Catalog extends Course {
      * @param courseId
      * @param courseName
      * @param instructor
-     * @param enrolledStudent
      */
-    public Catalog(String courseId, String courseName, String instructor, ArrayList<Student> enrolledStudent) {
-        super(courseId, courseName, instructor, enrolledStudent);
+    public Catalog(String courseId, String courseName, String instructor) {
+        super(courseId, courseName, instructor);
     }
 
     public void addCourse() {
