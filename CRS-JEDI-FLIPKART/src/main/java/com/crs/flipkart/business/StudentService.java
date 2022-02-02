@@ -38,7 +38,8 @@ public class StudentService implements StudentInterface{
         for(Pair<String,String> course: courses)
             System.out.println(course.getKey() + " - " + course.getValue());
         for(Pair<String,String> course : courses)
-            courseIds.add(course.getValue());
+            courseIds.add(course.getKey());
+        System.out.println(courseIds);
 
         while(true){
             System.out.println("Enter the courseId you want to add");
@@ -68,7 +69,8 @@ public class StudentService implements StudentInterface{
         for(Pair<String,String> course: courses)
             System.out.println(course.getKey() + " - " + course.getValue());
         for(Pair<String,String> course : courses)
-            courseIds.add(course.getValue());
+            courseIds.add(course.getKey());
+        System.out.println(courseIds);
 
         while (true) {
             System.out.println("Enter the courseId you want to remove");

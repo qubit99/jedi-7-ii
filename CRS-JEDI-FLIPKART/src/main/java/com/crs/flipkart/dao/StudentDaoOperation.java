@@ -87,7 +87,7 @@ public class StudentDaoOperation {
     }
 
     public ArrayList<Course> getAllCourses() {
-        String sql = "SELECT DISTINCT CID,COURSENAME FROM COURSE";
+        String sql = "SELECT  * FROM COURSE";
         ArrayList<Course> courses = new ArrayList<Course>();
         try{
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -109,7 +109,6 @@ public class StudentDaoOperation {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1,rollNo);
             ResultSet rs = stmt.executeQuery();
-            System.out.println("Course ID : Course Name");
             while(rs.next())
                 enrolledCourses.add(new Pair<String,String>(rs.getString(2),rs.getString(3)));
         }
@@ -159,6 +158,7 @@ public class StudentDaoOperation {
 
         String sql1 = "SELECT * FROM GRADECARD WHERE ROLLNO = ?";
         String sql2 = "SELECT  COURSE.COURSENAME, GRADE FROM SEMESTERREGISTRATION INNER JOIN COURSE ON COURSE.CID =SEMESTERREGISTRATION.CID WHERE ROLLNO = ?";
+        ArrayList<Pair<String,String>> gradeCard = new ArrayList<Pair<String,String>>();
 
         try {
             PreparedStatement stmt1 = conn.prepareStatement(sql1);
@@ -168,19 +168,17 @@ public class StudentDaoOperation {
             stmt2.setString(1,rollNo);
 
             ResultSet rs1 = stmt1.executeQuery();
-            ResultSet rs2 = stmt1.executeQuery();
-            ArrayList<Pair<String,String>> gradeCard = new ArrayList<Pair<String,String>>();
-
-            while(rs2.next())
-                gradeCard.add(new Pair<String,String>(rs2.getString(3),rs2.getString(4)));
             while(rs1.next()) {
                 gradeCard.add(new Pair<String,String>("SEMESTER " , Integer.toString(rs1.getInt(3))));
                 gradeCard.add(new Pair<String,String>("CGPA",rs1.getString(2)));
             }
-            return gradeCard;
+            ResultSet rs2 = stmt1.executeQuery();
+            while(rs2.next())
+                gradeCard.add(new Pair<String,String>(rs2.getString(1),rs2.getString(2)));
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return gradeCard;
     }
 }

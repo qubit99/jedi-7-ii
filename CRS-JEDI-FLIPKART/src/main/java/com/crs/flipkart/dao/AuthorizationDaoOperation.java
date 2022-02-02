@@ -34,7 +34,7 @@ public class AuthorizationDaoOperation {
                 return rs;
             }
             else{
-                throw new UserNotFoundException();
+                throw new UserNotFoundException(userId);
             }
         }
         catch(Exception e){
