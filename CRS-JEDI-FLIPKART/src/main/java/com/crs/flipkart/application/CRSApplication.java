@@ -5,6 +5,8 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 
 import com.crs.flipkart.business.*;
+import com.crs.flipkart.exception.InvalidCourseIdException;
+import com.crs.flipkart.exception.ProfessorNotFoundException;
 import com.crs.flipkart.exception.UserNotFoundException;
 import com.crs.flipkart.exception.WrongPasswordException;
 import com.crs.flipkart.utils.DBUtils;
@@ -49,7 +51,7 @@ public class CRSApplication {
     }
 
     public void mainMenu() {
-        logger.info("=====CRS Application=====");
+        logger.info("=====WELCOME TO CRS APPLICATION MENU=====");
         logger.info("You have the following choices: ");
         logger.info("Enter 1 for login");
         logger.info("Enter 2 for new student registration");
@@ -58,7 +60,7 @@ public class CRSApplication {
     }
 
     public void login() {
-        logger.info("=====Login=====");
+        logger.info("=====LOGIN=====");
         logger.info("Enter your user id: ");
         String userId = scanner.next();
         logger.info("Enter your password: ");
@@ -80,17 +82,21 @@ public class CRSApplication {
                 CRSStudentMenu clientStudent = new CRSStudentMenu();
                 clientStudent.CRSStudentMenu(rollNo,userId);
             }
-            else if(role.equals("professor")) {
+            else if(role.equals("Professor")) {
                 CRSProfessorMenu clientProf = new CRSProfessorMenu();
-
+                clientProf.profChoice(userId);
             }
         } catch (UserNotFoundException | WrongPasswordException e){
             logger.error(e.getMessage());
+        } catch (ProfessorNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvalidCourseIdException e) {
+            e.printStackTrace();
         }
     }
 
     public void registerNew() {
-        logger.info("=====New Student Registration=====");
+        logger.info("=====NEW STUDENT REGISTRATION=====");
         Student newStudent = new Student(null, null, "Student", null, null, null, null);
         PersonalDetails newPd = new PersonalDetails(null, null, null);
 
@@ -118,7 +124,7 @@ public class CRSApplication {
     }
 
     public void updatePassword() {
-        logger.info("=====Password Update=====");
+        logger.info("=====PASSWORD UPDATE=====");
         logger.info("enter user id");
         String userId = scanner.next();
         logger.info("enter your old password");

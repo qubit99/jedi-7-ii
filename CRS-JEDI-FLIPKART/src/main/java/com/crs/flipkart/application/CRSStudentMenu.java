@@ -16,7 +16,7 @@ public class CRSStudentMenu {
         StudentInterface studentInterface = new StudentService();
 
         while(true){
-            System.out.println("WELCOME TO STUDENT MENU");
+            System.out.println("=====WELCOME TO STUDENT MENU=====");
             System.out.println("Press 1 : View All Courses");
             System.out.println("Press 2 : Semester Registration");
             System.out.println("Press 3 : View Enrolled Courses");
