@@ -1,65 +1,99 @@
 package com.crs.flipkart.application;
 
+import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
+import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CRSStudentMenu {
-    Scanner scanner = new Scanner(System.in);
 
-    public void CRSStudentMenu(String studentId) {
+    public void CRSStudentMenu(String userId,String rollNo){
 
-    }
 
-    public void studentChoice(String studentId) {
-        System.out.println("=====Student Menu=====");
-        System.out.println("You have the following choices: ");
-        System.out.println("Enter 1 to view all courses");
-        System.out.println("Enter 2 for course registration");
-        System.out.println("Enter 3 to add course");
-        System.out.println("Enter 4 to drop course");
-        System.out.println("Enter 5 to view registered courses");
-        System.out.println("Enter 6 to view grades/Grade Card");
-        System.out.println("Enter 7 to view notifications");
-        System.out.println("Enter 8 to pay fees");
-        System.out.println("Enter 9 to exit");
+        StudentInterface studentInterface = new StudentService();
 
-        int choice = scanner.nextInt();
+        while(true){
+            System.out.println("WELCOME TO STUDENT MENU");
+            System.out.println("Press 1 : View All Courses");
+            System.out.println("Press 2 : Semester Registration");
+            System.out.println("Press 3 : View Enrolled Courses");
+            System.out.println("Press 4 : Add Course");
+            System.out.println("Press 5 : Remove Course");
+            System.out.println("Press 6 : View Grade Card ");
+            System.out.println("Press 7 : Exit");
 
-        StudentService student = new StudentService();
+            Scanner sc = new Scanner(System.in);
+            int choice = sc.nextInt();
 
-        switch(choice) {
-            case 1:
-                //student.viewCourses();
-                break;
-            case 2:
-                student.registerForCourses();
-                break;
-            case 3:
-                //student.addCourse(student_id);
-                break;
-            case 4:
-                //student.removeCourse(student_id);
-                break;
-            case 5:
-                //student.viewGradeCard();
-                break;
-            case 6:
-                //getGrades(student_id);
-                break;
-            case 7:
-                //showNotifications(student_id);
-                break;
-            case 8:
-                //payFees(student_id);
-                break;
-            case 9:
-                System.out.println("Logged Out Successfully!\n");
-                return;
+
+            switch (choice){
+                case 1 : {
+                    ArrayList<Course> courses = studentInterface.viewAllCourses();
+                    System.out.println("CourseId  : CourseName");
+                    for(Course course : courses)
+                        System.out.println(course.getCourseId() + "  -  " + course.getCourseName());
+                    break;
+                }
+                case 2 :{
+                    ArrayList<String> courseIds = new ArrayList<String>();
+                    String courseId;
+
+                    System.out.println("Enter your 4 primary choices");
+
+                    System.out.println("Enter courseId of your 1st choice");
+                    courseId = sc.next();
+                    courseIds.add(courseId);
+
+                    System.out.println("Enter courseId of your 2nd choice");
+                    courseId = sc.next();
+                    courseIds.add(courseId);
+
+                    System.out.println("Enter courseId of your 3rd choice");
+                    courseId = sc.next();
+                    courseIds.add(courseId);
+
+                    System.out.println("Enter courseId of your 4th choice");
+                    courseId = sc.next();
+                    courseIds.add(courseId);
+
+                    System.out.println("Enter your 2 secondary choices");
+
+                    System.out.println("Enter courseId of your 1st choice");
+                    courseId = sc.next();
+                    courseIds.add(courseId);
+
+                    System.out.println("Enter courseId of your 2nd choice");
+                    courseId = sc.next();
+                    courseIds.add(courseId);
+                    studentInterface.registerForCourses(rollNo,courseIds);
+                    break;
+                }
+                case 3:{
+                    ArrayList<Pair<String, String>> enrolledCourses = studentInterface.viewEnrolledCourses(rollNo);
+                    for (Pair<String,String> enrolledCourse : enrolledCourses)
+                        System.out.println(enrolledCourse.getKey()+ "  -  " + enrolledCourse.getValue());
+                    break;
+                }
+                case 4:{
+                    studentInterface.addCourse(rollNo);
+                    break;
+                }
+                case 5:{
+                    studentInterface.removeCourse(rollNo);
+                    break;
+                }
+                case 6:{
+                    studentInterface.viewGradeCard(rollNo);
+                    break;
+                }
+                case 7:
+                    return ;
+            }
 
         }
 
-
-        System.out.println(studentId);
     }
 }

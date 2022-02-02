@@ -4,9 +4,7 @@ import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 
-import com.crs.flipkart.business.DummyDB;
-import com.crs.flipkart.business.UserInterface;
-import com.crs.flipkart.business.UserService;
+import com.crs.flipkart.business.*;
 import com.crs.flipkart.exception.UserNotFoundException;
 import com.crs.flipkart.exception.WrongPasswordException;
 import com.crs.flipkart.utils.DBUtils;
@@ -24,8 +22,6 @@ public class CRSApplication {
     public static void main(String[] args) {
         DummyDB.createDatabase();
         BasicConfigurator.configure();
-
-        Connection connection = DBUtils.getConnection();
 
         CRSApplication client = new CRSApplication();
         client.mainMenu();
@@ -71,6 +67,7 @@ public class CRSApplication {
         UserInterface user = new UserService();
 
         try {
+            String rollNo = new String();
             user.verifyCredentials(userId, userPass);
             logger.info("login successful!");
             String role = user.getRole(userId);
@@ -79,9 +76,9 @@ public class CRSApplication {
                 CRSAdminMenu clientAdmin = new CRSAdminMenu();
                 clientAdmin.adminChoice(userId);
             }
-            else if(role.equals("student")) {
+            else if(role.equals("Student")) {
                 CRSStudentMenu clientStudent = new CRSStudentMenu();
-                clientStudent.studentChoice(userId);
+                clientStudent.CRSStudentMenu(rollNo,userId);
             }
             else if(role.equals("professor")) {
                 CRSProfessorMenu clientProf = new CRSProfessorMenu();
@@ -94,7 +91,7 @@ public class CRSApplication {
 
     public void registerNew() {
         logger.info("=====New Student Registration=====");
-        Student newStudent = new Student(null, null, "student", null, null, null, null);
+        Student newStudent = new Student(null, null, "Student", null, null, null, null);
         PersonalDetails newPd = new PersonalDetails(null, null, null);
 
         logger.info("enter name: ");
@@ -116,7 +113,8 @@ public class CRSApplication {
         logger.info("enter year of joining: ");
         newStudent.setYearOfJoining(scanner.next());
 
-        DummyDB.userList.put(newStudent.getUserId(), newStudent);
+        StudentInterface studentInterface = new StudentService();
+        studentInterface.registerStudent(newStudent);
     }
 
     public void updatePassword() {

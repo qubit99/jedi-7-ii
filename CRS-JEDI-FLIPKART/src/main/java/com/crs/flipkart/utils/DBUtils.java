@@ -1,5 +1,6 @@
 package com.crs.flipkart.utils;
 
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,7 +21,9 @@ public class DBUtils {
         else {
             try {
                 Properties prop = new Properties();
+                
                 InputStream inputStream = new FileInputStream("/Users/avantika.parihar/jedi-7-ii/CRS-JEDI-FLIPKART/src/main/java/config.properties");
+
                 prop.load(inputStream);
                 String driver = prop.getProperty("driver");
                 String url = prop.getProperty("url");

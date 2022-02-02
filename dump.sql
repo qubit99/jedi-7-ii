@@ -18,7 +18,6 @@
 --
 -- Table structure for table `catalog`
 --
-use jedi;
 
 DROP TABLE IF EXISTS `catalog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -167,7 +166,7 @@ CREATE TABLE `personaldetails` (
 
 LOCK TABLES `personaldetails` WRITE;
 /*!40000 ALTER TABLE `personaldetails` DISABLE KEYS */;
-INSERT INTO `personaldetails` VALUES ('MODIJI','101','DILLI','A1'),('Amit Balyan','809','Bangalore','P1'),('HC Verma','211','Kanpur','P2');
+INSERT INTO `personaldetails` VALUES ('MODIJI','101','DILLI','A1'),('Amit Balyan','809','Bangalore','P1'),('HC Verma','211','Kanpur','P2'),('Pranay','998','Jaipur','S1');
 /*!40000 ALTER TABLE `personaldetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +232,7 @@ CREATE TABLE `student` (
   `USERID` varchar(255) NOT NULL,
   `ROLLNO` varchar(255) NOT NULL,
   `DEPARTMENT` varchar(255) NOT NULL,
-  `ISAPPROVED` tinyint(1) NOT NULL,
+  `ISAPPROVED` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ROLLNO`),
   UNIQUE KEY `ROLLNO` (`ROLLNO`),
   KEY `USERID` (`USERID`),
@@ -247,6 +246,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES ('S1','19','CSE',0);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,7 +271,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('A1','password','Admin'),('P1','profpass','Professor'),('P2','profpass','Professor');
+INSERT INTO `user` VALUES ('A1','password','Admin'),('P1','profpass','Professor'),('P2','profpass','Professor'),('S1','stud','Student');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -284,5 +284,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-02 11:24:08
-
+-- Dump completed on 2022-02-02 15:12:49

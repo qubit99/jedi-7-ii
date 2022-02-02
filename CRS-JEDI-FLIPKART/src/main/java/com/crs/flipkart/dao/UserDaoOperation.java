@@ -1,6 +1,6 @@
 package com.crs.flipkart.dao;
 
-import com.crs.flipkart.application.constants.SqlQueriesConstants;
+import com.crs.flipkart.constants.SqlQueriesConstants;
 import com.crs.flipkart.exception.UserNotFoundException;
 import com.crs.flipkart.exception.WrongPasswordException;
 import com.crs.flipkart.utils.DBUtils;

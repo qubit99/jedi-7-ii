@@ -1,4 +1,4 @@
-package com.crs.flipkart.application.constants;
+package com.crs.flipkart.constants;
 
 public class SqlQueriesConstants {
 
