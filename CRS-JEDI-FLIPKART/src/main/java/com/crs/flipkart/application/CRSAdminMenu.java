@@ -19,7 +19,7 @@ public class CRSAdminMenu {
 
     public void adminChoice(String adminId) {
         AdminService adminService = new AdminService();
-        System.out.println("=====Admin Menu=====");
+        System.out.println("=====WELCOME TO ADMIN MENU=====");
         System.out.println("You have the following choices: ");
         System.out.println("Enter 1 to view all courses");
         System.out.println("Enter 2 to view all students");
@@ -77,8 +77,6 @@ public class CRSAdminMenu {
         } while(true);
 
         System.out.println("Returning to the main menu");
-
-        System.out.println(adminId);
     }
 
 }
