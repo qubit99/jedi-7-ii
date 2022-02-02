@@ -21,7 +21,7 @@ public class DBUtils {
         else {
             try {
                 Properties prop = new Properties();
-                
+
                 InputStream inputStream = new FileInputStream("/Users/avantika.parihar/jedi-7-ii/CRS-JEDI-FLIPKART/src/main/java/config.properties");
 
                 prop.load(inputStream);
