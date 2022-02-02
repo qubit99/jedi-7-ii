@@ -32,6 +32,7 @@ public class CRSStudentMenu {
             switch (choice){
                 case 1 : {
                     ArrayList<Course> courses = studentInterface.viewAllCourses();
+                    System.out.println("CourseId  : CourseName");
                     for(Course course : courses)
                         System.out.println(course.getCourseId() + "  -  " + course.getCourseName());
                     break;
