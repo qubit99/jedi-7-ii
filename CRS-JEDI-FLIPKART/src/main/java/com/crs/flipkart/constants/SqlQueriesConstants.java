@@ -14,4 +14,5 @@ public class SqlQueriesConstants {
 
     //PROFESSOR Queries
     public static final String GET_TEACHING_COURSES = "SELECT * FROM Course WHERE instructor=?";
+    public static final String GET_ENROLL_STUDENTS = "SELECT studentid FROM registration WHERE courseid=?";
 }

@@ -62,14 +62,14 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
         PreparedStatement prep_stmt = null;
         try {
             conn = DBUtils.getConnection();
-            String raw_stmt = SqlQueriesConstants.VIEW_ENROLL_STUDENTS;
+            String raw_stmt = SqlQueriesConstants.GET_ENROLL_STUDENTS;
             prep_stmt = conn.prepareStatement(raw_stmt);
             prep_stmt.setString(1, courseId);
             ResultSet result = prep_stmt.executeQuery();
             List<Student> students = new ArrayList<Student>();
             while(result.next()) {
                 String studentId = result.getString(1);
-                StudentDaoInterface studentDao = StudentDaoOperation.getInstance();
+                StudentDaoInterface studentDao = new StudentDaoOperation();
                 Student studentDetails = studentDao.getStudentDetails(studentId);
                 students.add(studentDetails);
             }
