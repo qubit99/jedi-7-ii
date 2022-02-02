@@ -18,10 +18,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class StudentDaoOperation {
+public class StudentDaoOperation implements StudentDaoInterface {
 
     Connection conn = DBUtils.getConnection();
 
+    /**
+     *
+     * @param st
+     */
     public void registerStudent(Student st) {
 
         String sql = "INSERT INTO USER VALUES(? , ? , ?)";
@@ -68,7 +72,16 @@ public class StudentDaoOperation {
         }
     }
 
+<<<<<<< HEAD
     public void registerForCourses(String rollNo, ArrayList<String> courseIds) {
+=======
+    /**
+     *
+     * @param rollNo
+     * @param courseIds
+     */
+    public void registerForCourses(String rollNo, ArrayList<String> courseIds){
+>>>>>>> development
         String sql = "INSERT INTO SEMESTERREGISTRATION VALUES(?,?,?,?),(?,?,?,?),(?,?,?,?) ,(?,?,?,?) ,(?,?,?,?) ,(?,?,?,?)";
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -87,6 +100,10 @@ public class StudentDaoOperation {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Course> getAllCourses() {
         String sql = "SELECT  * FROM COURSE";
         ArrayList<Course> courses = new ArrayList<Course>();
@@ -101,7 +118,16 @@ public class StudentDaoOperation {
         return courses;
     }
 
+<<<<<<< HEAD
     public ArrayList<Pair<String, String>> getEnrolledCourses(String rollNo) {
+=======
+    /**
+     *
+     * @param rollNo
+     * @return
+     */
+    public ArrayList<Pair<String,String>> getEnrolledCourses(String rollNo){
+>>>>>>> development
         String sql = "SELECT ROLLNO , COURSE.CID , COURSE.COURSENAME, GRADE FROM SEMESTERREGISTRATION INNER JOIN COURSE ON COURSE.CID =SEMESTERREGISTRATION.CID WHERE ROLLNO = ?";
         ArrayList<Pair<String, String>> enrolledCourses = new ArrayList<Pair<String, String>>();
 
@@ -117,8 +143,17 @@ public class StudentDaoOperation {
         return enrolledCourses;
     }
 
+<<<<<<< HEAD
 
     public void addCourse(String rollNo, String courseId) {
+=======
+    /**
+     *
+     * @param rollNo
+     * @param courseId
+     */
+    public void addCourse(String rollNo,String courseId){
+>>>>>>> development
         String sql = "INSERT INTO SEMESTERREGISTRATION VALUES(?,?,?,?)";
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -136,6 +171,11 @@ public class StudentDaoOperation {
         }
     }
 
+    /**
+     *
+     * @param rollNo
+     * @param courseId
+     */
     public void removeCourse(String rollNo, String courseId) {
         String sql = "DELETE FROM SEMESTERREGISTRATION WHERE ROLLNO = ? AND CID = ?";
         PreparedStatement stmt = null;
@@ -153,7 +193,16 @@ public class StudentDaoOperation {
         }
     }
 
+<<<<<<< HEAD
     public ArrayList<Pair<String, String>> getGradeCard(String rollNo) {
+=======
+    /**
+     *
+     * @param rollNo
+     * @return
+     */
+    public ArrayList<Pair<String,String>> getGradeCard(String rollNo) {
+>>>>>>> development
 
         String sql1 = "SELECT  COURSE.COURSENAME, GRADE FROM SEMESTERREGISTRATION INNER JOIN COURSE ON COURSE.CID =SEMESTERREGISTRATION.CID WHERE ROLLNO = ?";
         String sql2 = "SELECT * FROM GRADECARD WHERE ROLLNO = ?";
