@@ -25,8 +25,6 @@ public class CRSApplication {
         DummyDB.createDatabase();
         BasicConfigurator.configure();
 
-        Connection connection = DBUtils.getConnection();
-
         CRSApplication client = new CRSApplication();
         client.mainMenu();
         int choice;
@@ -71,6 +69,7 @@ public class CRSApplication {
         UserInterface user = new UserService();
 
         try {
+            String rollNo = new String();
             user.verifyCredentials(userId, userPass);
             logger.info("login successful!");
             String role = user.getRole(userId);
@@ -81,7 +80,7 @@ public class CRSApplication {
             }
             else if(role.equals("Student")) {
                 CRSStudentMenu clientStudent = new CRSStudentMenu();
-                clientStudent.studentChoice(userId);
+                clientStudent.CRSStudentMenu(rollNo,userId);
             }
             else if(role.equals("professor")) {
                 CRSProfessorMenu clientProf = new CRSProfessorMenu();
@@ -94,7 +93,7 @@ public class CRSApplication {
 
     public void registerNew() {
         logger.info("=====New Student Registration=====");
-        Student newStudent = new Student(null, null, "student", null, null, null, null);
+        Student newStudent = new Student(null, null, "Student", null, null, null, null);
         PersonalDetails newPd = new PersonalDetails(null, null, null);
 
         logger.info("enter name: ");
@@ -116,7 +115,8 @@ public class CRSApplication {
         logger.info("enter year of joining: ");
         newStudent.setYearOfJoining(scanner.next());
 
-        DummyDB.userList.put(newStudent.getUserId(), newStudent);
+        StudentInterface studentInterface = new StudentService();
+        studentInterface.registerStudent(newStudent);
     }
 
     public void updatePassword() {
