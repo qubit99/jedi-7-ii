@@ -1,6 +1,6 @@
 package com.crs.flipkart.dao;
 
-import com.crs.flipkart.application.constants.SqlQueriesConstants;
+import com.crs.flipkart.constants.SqlQueriesConstants;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.exception.ProfessorNotAddedException;

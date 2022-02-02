@@ -79,7 +79,7 @@ public class CRSApplication {
                 CRSAdminMenu clientAdmin = new CRSAdminMenu();
                 clientAdmin.adminChoice(userId);
             }
-            else if(role.equals("student")) {
+            else if(role.equals("Student")) {
                 CRSStudentMenu clientStudent = new CRSStudentMenu();
                 clientStudent.studentChoice(userId);
             }

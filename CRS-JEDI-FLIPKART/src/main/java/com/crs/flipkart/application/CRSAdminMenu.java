@@ -38,7 +38,7 @@ public class CRSAdminMenu {
                 System.out.println("Displaying all Courses: ");
                 List<Course> courses = adminService.viewAllCourses();
                 for(Course course : courses){
-                    System.out.println(course.getCourseName());
+                    System.out.println(course.getCourseName() + "------------" + course.getInstructor());
                 }
             }
             else if(choice==2) {
@@ -66,8 +66,13 @@ public class CRSAdminMenu {
             else if(choice==7) {
 
             }
+
             else if(choice==8) {
                 break;
+            }
+            else if(choice==9) {
+                System.out.println("Logged out");
+                return;
             }
         } while(true);
 
