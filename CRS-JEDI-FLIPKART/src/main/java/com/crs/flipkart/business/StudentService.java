@@ -2,10 +2,9 @@ package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.*;
 import com.crs.flipkart.dao.StudentDaoOperation;
+import com.crs.flipkart.exception.FeesPaymentUnsuccessfulException;
 import javafx.util.Pair;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -24,10 +23,29 @@ public class StudentService implements StudentInterface{
         return studentDaoOperation.getAllCourses();
     }
 
-
     @Override
     public ArrayList<Pair<String, String>> viewEnrolledCourses(String rollNo) {
        return studentDaoOperation.getEnrolledCourses(rollNo);
+    }
+
+    @Override
+    public String getRollNo(String userId) {
+        return studentDaoOperation.getRollNo(userId);
+    }
+
+    @Override
+    public ArrayList<Notification> getNotifications(String rollNo) {
+        return studentDaoOperation.getNotifications(rollNo);
+    }
+
+    @Override
+    public void payFees(String rollNo) {
+        try{
+            studentDaoOperation.payFees(rollNo);
+        }
+        catch(FeesPaymentUnsuccessfulException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void addCourse(String rollNo){
@@ -89,13 +107,7 @@ public class StudentService implements StudentInterface{
         }
     }
 
-    public void viewGradeCard(String rollNo){
-        ArrayList<Pair<String,String>> gradeCard = studentDaoOperation.getGradeCard(rollNo);
-        System.out.println("******GRADE CARD***********");
-        for(Pair<String,String> grade : gradeCard) {
-            System.out.println(grade.getKey() + " : " + grade.getValue());
-        }
-
-
+    public ArrayList<Pair<String, String>> viewGradeCard(String rollNo){
+        return studentDaoOperation.getGradeCard(rollNo);
     }
 }

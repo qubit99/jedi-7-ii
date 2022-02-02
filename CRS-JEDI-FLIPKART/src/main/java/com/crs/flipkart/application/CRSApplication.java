@@ -78,6 +78,7 @@ public class CRSApplication {
             }
             else if(role.equals("Student")) {
                 CRSStudentMenu clientStudent = new CRSStudentMenu();
+                rollNo = (new StudentService()).getRollNo(userId);
                 clientStudent.CRSStudentMenu(rollNo,userId);
             }
             else if(role.equals("professor")) {

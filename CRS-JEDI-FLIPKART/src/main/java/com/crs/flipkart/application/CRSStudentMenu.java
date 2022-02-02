@@ -1,6 +1,7 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.Notification;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
 import javafx.util.Pair;
@@ -23,7 +24,9 @@ public class CRSStudentMenu {
             System.out.println("Press 4 : Add Course");
             System.out.println("Press 5 : Remove Course");
             System.out.println("Press 6 : View Grade Card ");
-            System.out.println("Press 7 : Exit");
+            System.out.println("Press 7 : View Notifications ");
+            System.out.println("Press 8 : Pay Fees");
+            System.out.println("Press 9 : Exit");
 
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
@@ -86,10 +89,29 @@ public class CRSStudentMenu {
                     break;
                 }
                 case 6:{
-                    studentInterface.viewGradeCard(rollNo);
+                    ArrayList<Pair<String,String>> gradeCard = studentInterface.viewGradeCard(rollNo);
+                    System.out.println("******GRADE CARD***********");
+                    for(int i=0;i< gradeCard.size();i++) {
+                        System.out.println(gradeCard.get(i).getKey() + ":"+gradeCard.get(i).getValue());
+                    }
                     break;
                 }
-                case 7:
+                case 7:{
+                    ArrayList<Notification>  notifications = studentInterface.getNotifications(rollNo);
+                    if(notifications==null || notifications.isEmpty()) {
+                        System.out.println("no Notifications");
+                        break;
+                    }
+                    for(Notification notification : notifications) {
+                        System.out.println("Notification ID:" + notification.getNotificationID());
+                        System.out.println("Notification:"+ notification.getMessage());
+                    }
+                }
+                case 8:{
+                    studentInterface.payFees(rollNo);
+                    break;
+                }
+                case 9:
                     return ;
             }
 
