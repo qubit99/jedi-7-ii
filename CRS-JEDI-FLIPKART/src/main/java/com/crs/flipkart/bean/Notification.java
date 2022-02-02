@@ -4,7 +4,7 @@ public class Notification {
 
     private String studentId;
     private String message;
-    private String extras;
+    private String notificationID;
 
     /**
      *
@@ -16,7 +16,7 @@ public class Notification {
         super();
         this.studentId = studentId;
         this.message = message;
-        this.extras = extras;
+        this.notificationID = extras;
     }
 
     public String getStudentId() {
@@ -31,10 +31,10 @@ public class Notification {
     public void setMessage(String message) {
         this.message = message;
     }
-    public String getExtras() {
-        return extras;
+    public String getNotificationID() {
+        return notificationID;
     }
-    public void setExtras(String extras) {
-        this.extras = extras;
+    public void setNotificationID(String notificationID) {
+        this.notificationID = notificationID;
     }
 }
