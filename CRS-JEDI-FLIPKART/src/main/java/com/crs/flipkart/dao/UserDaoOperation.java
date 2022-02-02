@@ -49,7 +49,18 @@ public class UserDaoOperation implements UserDaoInterface{
     }
 
     @Override
-    public boolean updatePassword(String userID, String oldPassword, String newPassword) throws UserNotFoundException {
+    public boolean updatePassword(String userId, String newPassword){
+        statement = null;
+        try {
+            String sql = SqlQueriesConstants.UPDATE_PASSWORD_QUERY;
+            statement = connection.prepareStatement(sql);
+            statement.setString(1,newPassword);
+            statement.setString(2,userId);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException se){
+            logger.info(se.getMessage());
+        }
         return false;
     }
 

@@ -16,13 +16,11 @@ public interface UserDaoInterface {
 
     /**
      *
-     * @param userID
-     * @param oldPassword
+     * @param userId
      * @param newPassword
-     * @return true if password updated successfully
-     * @throws UserNotFoundException
+     * @return
      */
-    public boolean updatePassword(String userID, String oldPassword,String newPassword) throws UserNotFoundException;
+    public boolean updatePassword(String userId, String newPassword);
 
     /**
      *

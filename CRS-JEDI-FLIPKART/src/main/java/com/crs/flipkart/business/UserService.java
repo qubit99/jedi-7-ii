@@ -24,28 +24,12 @@ public class UserService implements UserInterface{
     /**
      *
      * @param userId
-     * @param oldPassword
      * @param newPassword
      * @return
      */
     @Override
-    public boolean updatePassword(String userId, String oldPassword, String newPassword) {
-
-        Map<String, User> userList = DummyDB.userList;
-
-        if(userList.containsKey(userId)){
-            if(userList.get(userId).getPassword().equals(oldPassword)){
-                userList.get(userId).setPassword(newPassword);
-                return true;
-            }
-            else{
-                System.out.println("Wrong old Password");
-            }
-        }
-        else{
-            System.out.println("No account with given id found");
-        }
-        return false;
+    public boolean updatePassword(String userId, String newPassword)  {
+        return userDaoOperation.updatePassword(userId, newPassword);
     }
 
     /**

@@ -87,10 +87,8 @@ public class CRSApplication {
                 CRSProfessorMenu clientProf = new CRSProfessorMenu();
 
             }
-        } catch (UserNotFoundException u){
-            logger.error(u.getMessage());
-        } catch (WrongPasswordException p){
-            logger.error(p.getMessage());
+        } catch (UserNotFoundException | WrongPasswordException e){
+            logger.error(e.getMessage());
         }
     }
 
@@ -134,7 +132,7 @@ public class CRSApplication {
             user.verifyCredentials(userId, userPass);
             logger.info("enter new password");
             String newPass = scanner.next();
-            if(user.updatePassword(userId, userPass, newPass)) {
+            if(user.updatePassword(userId, newPass)) {
                 logger.info("password updated successfully!");
             }
         } catch (UserNotFoundException u){
