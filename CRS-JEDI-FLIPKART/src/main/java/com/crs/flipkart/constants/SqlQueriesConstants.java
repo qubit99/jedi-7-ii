@@ -13,6 +13,6 @@ public class SqlQueriesConstants {
     public static final String UPDATE_PASSWORD_QUERY = "UPDATE USER SET PASSWORD = ? WHERE userID = ?";
 
     //PROFESSOR Queries
-    public static final String GET_TEACHING_COURSES = "SELECT * FROM Course WHERE instructor=?";
+    public static final String GET_TEACHING_COURSES = "SELECT * FROM Course WHERE professorid=?";
     public static final String GET_ENROLL_STUDENTS = "SELECT studentid FROM registration WHERE courseid=?";
 }

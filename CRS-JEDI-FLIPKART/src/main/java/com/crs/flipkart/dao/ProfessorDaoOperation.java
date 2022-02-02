@@ -70,8 +70,8 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
             while(result.next()) {
                 String studentId = result.getString(1);
                 StudentDaoInterface studentDao = new StudentDaoOperation();
-                Student studentDetails = studentDao.getStudentDetails(studentId);
-                students.add(studentDetails);
+//                Student studentDetails = studentDao.getStudentDetails(studentId);
+//                students.add(studentDetails);
             }
             return students;
         }catch(SQLException se){

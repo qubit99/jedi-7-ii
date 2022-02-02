@@ -5,6 +5,8 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 
 import com.crs.flipkart.business.*;
+import com.crs.flipkart.exception.InvalidCourseIdException;
+import com.crs.flipkart.exception.ProfessorNotFoundException;
 import com.crs.flipkart.exception.UserNotFoundException;
 import com.crs.flipkart.exception.WrongPasswordException;
 import com.crs.flipkart.utils.DBUtils;
@@ -80,12 +82,16 @@ public class CRSApplication {
                 CRSStudentMenu clientStudent = new CRSStudentMenu();
                 clientStudent.CRSStudentMenu(rollNo,userId);
             }
-            else if(role.equals("professor")) {
+            else if(role.equals("Professor")) {
                 CRSProfessorMenu clientProf = new CRSProfessorMenu();
                 clientProf.profChoice(userId);
             }
         } catch (UserNotFoundException | WrongPasswordException e){
             logger.error(e.getMessage());
+        } catch (ProfessorNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvalidCourseIdException e) {
+            e.printStackTrace();
         }
     }
 
