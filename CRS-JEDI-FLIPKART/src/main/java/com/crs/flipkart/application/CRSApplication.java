@@ -4,11 +4,8 @@ import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 
-import com.crs.flipkart.business.DummyDB;
-import com.crs.flipkart.business.UserInterface;
-import com.crs.flipkart.business.UserService;
-import com.crs.flipkart.exception.UserNotFoundException;
-import com.crs.flipkart.exception.WrongPasswordException;
+import com.crs.flipkart.business.*;
+import com.crs.flipkart.exception.*;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
@@ -16,16 +13,20 @@ import org.apache.log4j.BasicConfigurator;
 import java.sql.Connection;
 import java.util.Scanner;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.Month;
+
 public class CRSApplication {
 
     public static Scanner scanner = new Scanner(System.in);
     private static Logger logger = Logger.getLogger(CRSApplication.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws StudentNotAddedException, UserIdAlreadyInUseException {
         DummyDB.createDatabase();
         BasicConfigurator.configure();
-
-        Connection connection = DBUtils.getConnection();
 
         CRSApplication client = new CRSApplication();
         client.mainMenu();
@@ -33,7 +34,7 @@ public class CRSApplication {
 
         do {
             choice = scanner.nextInt();
-            logger.info("You entered: "+choice);
+            System.out.println("You entered: "+choice);
             if(choice==1) {
                 client.login();
             }
@@ -49,96 +50,116 @@ public class CRSApplication {
             client.mainMenu();
         } while (true);
 
-        logger.info("Thank you!");
+        System.out.println("Thank you!");
     }
 
     public void mainMenu() {
-        logger.info("=====CRS Application=====");
-        logger.info("You have the following choices: ");
-        logger.info("Enter 1 for login");
-        logger.info("Enter 2 for new student registration");
-        logger.info("Enter 3 to update password");
-        logger.info("Enter 4 to exit");
+        System.out.println("=====WELCOME TO CRS APPLICATION MENU=====");
+        System.out.println("You have the following choices: ");
+        System.out.println("Enter 1 for login");
+        System.out.println("Enter 2 for new student registration");
+        System.out.println("Enter 3 to update password");
+        System.out.println("Enter 4 to exit");
     }
 
     public void login() {
-        logger.info("=====Login=====");
-        logger.info("Enter your user id: ");
+        System.out.println("==========LOGIN==========");
+        System.out.println("Enter your user id: ");
         String userId = scanner.next();
-        logger.info("Enter your password: ");
+        System.out.println("Enter your password: ");
         String userPass = scanner.next();
 
         UserInterface user = new UserService();
+        StudentInterface student = new StudentService();
 
         try {
             user.verifyCredentials(userId, userPass);
-            logger.info("login successful!");
             String role = user.getRole(userId);
-            logger.info("Role: "+role);
+
+            System.out.println("==============================");
+            System.out.println("login successful!");
+
+            LocalDateTime current = LocalDateTime.now();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String formatedDateTime = current.format(format);
+            System.out.println("login date and time: " + formatedDateTime);
+
+            System.out.println("Role: "+role);
             if(role.equals("Admin")) {
                 CRSAdminMenu clientAdmin = new CRSAdminMenu();
                 clientAdmin.adminChoice(userId);
             }
             else if(role.equals("Student")) {
-                CRSStudentMenu clientStudent = new CRSStudentMenu();
-                clientStudent.studentChoice(userId);
+                if(student.isApproved(userId)) {
+                    CRSStudentMenu clientStudent = new CRSStudentMenu();
+                    String rollNo = (new StudentService()).getRollNo(userId);
+                    clientStudent.CRSStudentMenu(rollNo, userId);
+                }
+                else{
+                    System.out.println("You are not approved yet");
+                }
             }
-            else if(role.equals("professor")) {
+            else if(role.equals("Professor")) {
                 CRSProfessorMenu clientProf = new CRSProfessorMenu();
-
+                clientProf.profChoice(userId);
             }
         } catch (UserNotFoundException | WrongPasswordException e){
-            logger.error(e.getMessage());
+            System.out.println(e.getMessage());
+        } catch (ProfessorNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvalidCourseIdException e) {
+            e.printStackTrace();
         }
     }
 
-    public void registerNew() {
-        logger.info("=====New Student Registration=====");
-        Student newStudent = new Student(null, null, "student", null, null, null, null);
+    public void registerNew() throws StudentNotAddedException, UserIdAlreadyInUseException {
+        System.out.println("==========NEW STUDENT REGISTRATION==========");
+        Student newStudent = new Student(null, null, "Student", null, null, null, null);
         PersonalDetails newPd = new PersonalDetails(null, null, null);
 
-        logger.info("enter name: ");
+        System.out.println("enter name: ");
         newPd.setName(scanner.next());
-        logger.info("enter phone number: ");
+        System.out.println("enter phone number: ");
         newPd.setPhoneNo(scanner.next());
-        logger.info("enter address: ");
+        System.out.println("enter address: ");
         newPd.setAddress(scanner.next());
         newStudent.setPd(newPd);
 
-        logger.info("enter id: ");
+        System.out.println("enter id: ");
         newStudent.setUserId(scanner.next());
-        logger.info("enter password: ");
+        System.out.println("enter password: ");
         newStudent.setPassword(scanner.next());
-        logger.info("enter roll no: ");
+        System.out.println("enter roll no: ");
         newStudent.setRollNo(scanner.next());
-        logger.info("enter department: ");
+        System.out.println("enter department: ");
         newStudent.setDepartment(scanner.next());
-        logger.info("enter year of joining: ");
+        System.out.println("enter year of joining: ");
         newStudent.setYearOfJoining(scanner.next());
 
-        DummyDB.userList.put(newStudent.getUserId(), newStudent);
+        StudentInterface studentService = new StudentService();
+        studentService.registerStudent(newStudent);
     }
 
     public void updatePassword() {
-        logger.info("=====Password Update=====");
-        logger.info("enter user id");
+        System.out.println("==========PASSWORD UPDATE==========");
+        System.out.println("enter user id");
         String userId = scanner.next();
-        logger.info("enter your old password");
+        System.out.println("enter your old password");
         String userPass = scanner.next();
 
         UserInterface user = new UserService();
 
         try {
             user.verifyCredentials(userId, userPass);
-            logger.info("enter new password");
+            System.out.println("enter new password");
             String newPass = scanner.next();
             if(user.updatePassword(userId, newPass)) {
-                logger.info("password updated successfully!");
+                System.out.println("password updated successfully!");
             }
         } catch (UserNotFoundException u){
-            logger.info("User not found");
+            System.out.println("User not found");
         } catch (WrongPasswordException p){
-            logger.info("Password wrong");
+            System.out.println("Password wrong");
         }
     }
 }

@@ -3,6 +3,10 @@ package com.crs.flipkart.business;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.exception.InvalidStudentIdException;
+import com.crs.flipkart.exception.ProfessorNotAddedException;
+import com.crs.flipkart.exception.StudentNotAddedException;
+import com.crs.flipkart.exception.UserIdAlreadyInUseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +18,8 @@ public interface AdminInterface {
      * @param professor
      * @return
      */
-    public String addProfessor(Professor professor);
+    public Boolean addProfessor(Professor professor) throws UserIdAlreadyInUseException, ProfessorNotAddedException;
+
 
     /**
      *
@@ -32,15 +37,34 @@ public interface AdminInterface {
 
     /**
      *
-     * @param student
+     * @param rollNo
+     * @return
+     * @throws InvalidStudentIdException
+     */
+    public boolean approveStudentRegistration(String rollNo) throws InvalidStudentIdException;
+
+    /**
+     *
      * @return
      */
-    public String approveStudentRegistration(Student student);
+    public List<Student> viewAllStudents(int flag);
 
+    /**
+     *
+     * @return
+     */
+    public List<Professor> viewAllProfessors();
 
-    public ArrayList<Student> viewAllStudents();
-
-    public ArrayList<Professor> viewAllProfessors();
-
+    /**
+     *
+     * @return
+     */
     public List<Course> viewAllCourses();
+
+    /**
+     *
+     * @param course
+     * @return
+     */
+    public Boolean addCourse(Course course);
 }

@@ -1,9 +1,12 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.exception.InvalidCourseIdException;
 import com.crs.flipkart.exception.InvalidGradeException;
+import com.crs.flipkart.exception.ProfessorNotFoundException;
+import com.crs.flipkart.exception.UserNotFoundException;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -15,7 +18,7 @@ public interface ProfessorInterface {
      * @param profid
      * @return List of courses professor is teaching
      */
-    public List<Course> viewTeachingCourses(String profid);
+    public List<Course> viewTeachingCourses(String profid) throws ProfessorNotFoundException;
 
     /**
      * Function to view enrolled students for a course
@@ -23,7 +26,7 @@ public interface ProfessorInterface {
      * @return List of students enrolled in the course
      * @exception InvalidCourseIdException
      */
-    public List<Student> viewEnrolledStudents(String profid, String courseId) throws InvalidCourseIdException;
+    public List<PersonalDetails> viewEnrolledStudents(String profid, String courseId) throws InvalidCourseIdException;
 
     /**
      * Function to give grades to students

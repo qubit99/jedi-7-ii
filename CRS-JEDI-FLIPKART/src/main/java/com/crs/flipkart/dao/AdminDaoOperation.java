@@ -1,13 +1,17 @@
 package com.crs.flipkart.dao;
 
+import com.crs.flipkart.bean.PersonalDetails;
+import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.business.AdminInterface;
+import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.constants.SqlQueriesConstants;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
-import com.crs.flipkart.exception.ProfessorNotAddedException;
-import com.crs.flipkart.exception.UserIdAlreadyInUseException;
+import com.crs.flipkart.exception.*;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
+import javax.jws.soap.SOAPBinding;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +29,7 @@ public class AdminDaoOperation implements AdminDaoInterface{
     private static Logger logger = Logger.getLogger(AdminDaoOperation.class);
     private PreparedStatement statement = null;
 
+    UserDaoOperation userDaoOperation = new UserDaoOperation();
 
     public AdminDaoOperation() {}
 
@@ -73,12 +78,153 @@ public class AdminDaoOperation implements AdminDaoInterface{
     }
 
     @Override
-    public List<Professor> viewProfessors(int catalogId) {
-        return null;
+    public List<Professor> viewAllProfessors() {
+        statement = null;
+        List<Professor> professorList = new ArrayList<>();
+        try {
+
+            String sql = SqlQueriesConstants.VIEW_PROFESSOR_QUERY;
+            statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+
+                Professor professor = new Professor();
+                professor.setUserId(resultSet.getString(1));
+                professor.setDepartment(resultSet.getString(2));
+                //if Personal Details for given userId exists, we add them in object
+                PersonalDetails pd = userDaoOperation.getPersonalDetails(professor.getUserId());
+
+                if(pd!=null){
+                    professor.setPd(pd);
+                }
+                professorList.add(professor);
+            }
+
+            logger.info(professorList.size() + " professors in college");
+
+        }catch(SQLException se) {
+
+            logger.error(se.getMessage());
+
+        }
+        return professorList;
+    }
+
+    @Override
+    public List<Student> viewAllStudents(int flag) {
+        statement = null;
+        List<Student> studentList = new ArrayList<>();
+        try {
+
+            String sql = SqlQueriesConstants.VIEW_STUDENT_QUERY;
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,flag);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+
+                Student student = new Student();
+                student.setUserId(resultSet.getString("USERID"));
+                student.setRollNo(resultSet.getString("ROLLNO"));
+                student.setDepartment(resultSet.getString("DEPARTMENT"));
+                //if Personal Details for given userId exists, we add them in object
+                PersonalDetails pd = userDaoOperation.getPersonalDetails(student.getUserId());
+
+                if(pd!=null){
+                    student.setPd(pd);
+                }
+                studentList.add(student);
+            }
+
+            logger.info(studentList.size() + " students in college");
+
+        }catch(SQLException se) {
+
+            logger.error(se.getMessage());
+
+        }
+        return studentList;
     }
 
     @Override
     public boolean addProfessor(Professor professor) throws ProfessorNotAddedException, UserIdAlreadyInUseException {
+        statement = null;
+        try {
+            String sql1 = SqlQueriesConstants.ADD_USER_QUERY;
+            String sql2 = SqlQueriesConstants.ADD_PROFESSOR_QUERY;
+            String sql3 = SqlQueriesConstants.INSERT_PERSONALDETAILS_QUERY;
+
+            statement = connection.prepareStatement(sql1);
+            statement.setString(1,professor.getUserId());
+            statement.setString(2,professor.getPassword());
+            statement.setString(3,professor.getRole());
+            int status = statement.executeUpdate();
+            if(status <= 0)
+                throw new UserIdAlreadyInUseException();
+
+            statement = connection.prepareStatement(sql2);
+            statement.setString(1,professor.getUserId());
+            statement.setString(2,professor.getDepartment());
+            status = statement.executeUpdate();
+            if(status<=0)
+                throw new ProfessorNotAddedException();
+
+            statement = connection.prepareStatement(sql3);
+            statement.setString(1,professor.getPd().getName());
+            statement.setString(2,professor.getPd().getPhoneNo());
+            statement.setString(3,professor.getPd().getAddress());
+            statement.setString(4,professor.getUserId());
+            status = statement.executeUpdate();
+            if(status<=0)
+                throw  new SQLException();
+            else
+                return true;
+
+        } catch (SQLException se){
+            logger.error(se.getMessage());
+        }
+        return false;
+    }
+
+
+
+    @Override
+    public Boolean addCourse(Course course) {
+        statement = null;
+        try {
+            String sql1 = SqlQueriesConstants.ADD_COURSE_QUERY;
+
+            statement = connection.prepareStatement(sql1);
+            statement.setString(1,course.getCourseId());
+            statement.setString(2,course.getCourseName());
+            int status = statement.executeUpdate();
+            if(status <= 0)
+                throw new CourseIdAlreadyInUseException(course.getCourseId());
+            else
+                logger.info("Course added successfully");
+                return true;
+
+        } catch (SQLException | CourseIdAlreadyInUseException se){
+            logger.error(se.getMessage());
+        }
+        return false;
+    }
+
+    public Boolean approveStudentRegistration(String rollNo) {
+        statement = null;
+        try {
+            String sql = SqlQueriesConstants.APPROVE_STUDENT_QUERY;
+            statement = connection.prepareStatement(sql);
+            statement.setString(1,rollNo);
+            int status = statement.executeUpdate();
+            if(status<=0)
+                throw new SQLException();
+            else
+                return true;
+        } catch (SQLException se){
+            logger.info(se.getMessage());
+        }
         return false;
     }
 }

@@ -5,6 +5,10 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.AdminDaoOperation;
+import com.crs.flipkart.exception.InvalidStudentIdException;
+import com.crs.flipkart.exception.ProfessorNotAddedException;
+import com.crs.flipkart.exception.StudentNotAddedException;
+import com.crs.flipkart.exception.UserIdAlreadyInUseException;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -18,9 +22,12 @@ public class AdminService implements AdminInterface{
     AdminDaoInterface adminDaoOperation =new AdminDaoOperation();
 
     @Override
-    public String addProfessor(Professor professor) {
-        DummyDB.professorList.put("P#", professor);
-        return professor.getPd().getName()+"added";
+    public Boolean addProfessor(Professor professor) throws UserIdAlreadyInUseException, ProfessorNotAddedException {
+        return  adminDaoOperation.addProfessor(professor);
+    }
+
+    public Boolean addStudent(Student student) throws UserIdAlreadyInUseException, StudentNotAddedException {
+        return  adminDaoOperation.addStudent(student);
     }
 
     @Override
@@ -41,27 +48,27 @@ public class AdminService implements AdminInterface{
     }
 
     @Override
-    public String approveStudentRegistration(Student student) {
-        return null;
+    public boolean approveStudentRegistration(String rollNo) throws InvalidStudentIdException {
+        return adminDaoOperation.approveStudentRegistration(rollNo);
     }
 
     @Override
-    public ArrayList<Student> viewAllStudents() {
-        ArrayList<Student> studentList = new ArrayList<Student>();
-        for(Student student: DummyDB.studentList.values()){
-            studentList.add(student);
-        }
-        return studentList;
-
+    public List<Student> viewAllStudents(int flag) {
+        return adminDaoOperation.viewAllStudents(flag);
     }
 
     @Override
-    public ArrayList<Professor> viewAllProfessors() {
-        return null;
+    public List<Professor> viewAllProfessors() {
+        return adminDaoOperation.viewAllProfessors();
     }
 
     @Override
     public List<Course> viewAllCourses() {
         return adminDaoOperation.viewAllCourses();
+    }
+
+    @Override
+    public Boolean addCourse(Course course) {
+        return adminDaoOperation.addCourse(course);
     }
 }

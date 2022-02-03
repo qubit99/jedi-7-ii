@@ -1,54 +1,60 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
+import com.crs.flipkart.dao.ProfessorDaoInterface;
+import com.crs.flipkart.dao.ProfessorDaoOperation;
 import com.crs.flipkart.exception.InvalidCourseIdException;
 import com.crs.flipkart.exception.InvalidGradeException;
 import com.crs.flipkart.exception.ProfessorNotFoundException;
 import com.crs.flipkart.exception.UserNotFoundException;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProfessorService {
+public class ProfessorService implements ProfessorInterface {
     public ProfessorService(){
 
     }
-    /**
-     * Function to view courses a professor is teaching
-     * @param profid
-     * @return List of courses professor is teaching
-     */
-//    public List<Course> viewTeachingCourses(String profid) throws ProfessorNotFoundException {
-//        HashMap<String, Course> courseList = DummyDB.courseList;
-//        if(courseList.containsKey(profid)){
-//            return courseList.get(profid);
-//        }
-//        else if(courseList.containsKey(profid)==false){
-//            throw new ProfessorNotFoundException();
-//        }
-//        return null;
-//    }
+
+    private static Logger logger = Logger.getLogger(ProfessorService.class);
+
+    ProfessorDaoInterface professorDaoOperation = new ProfessorDaoOperation();
 
     /**
-     * Function to view enrolled students for a course
-     * @param profid, courseId
-     * @return List of students enrolled in the course
-     * @exception InvalidCourseIdException
+     *
+     * @param profId
+     * @return
+     * @throws ProfessorNotFoundException
      */
-    public List<Student> viewEnrolledStudents(String profid, String courseId) throws InvalidCourseIdException {
-        List<Student> temp = new ArrayList<Student>();
-        return temp;
+    public List<Course> viewTeachingCourses(String profId) throws ProfessorNotFoundException {
+        return professorDaoOperation.getTeachingCourses(profId);
     }
+
     /**
-     * Function to give grades to students
-     * @param studentid, Course Id, HashTable of StudentId and Grade given
-     * @exception InvalidGradeException
+     *
+     * @param profId
+     * @param courseId
+     * @return
+     * @throws InvalidCourseIdException
+     */
+    public List<PersonalDetails> viewEnrolledStudents(String profId, String courseId) throws InvalidCourseIdException {
+        return professorDaoOperation.getEnrolledStudents(profId, courseId);
+    }
+
+    /**
+     *
+     * @param studentid
+     * @param courseId
+     * @param grade
+     * @throws InvalidGradeException
      */
     public void giveGrades(String studentid, String courseId, String grade) throws InvalidGradeException {
-
+        professorDaoOperation.giveGrades(studentid, courseId, grade);
     }
 }
