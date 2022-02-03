@@ -8,7 +8,8 @@ public class SqlQueriesConstants {
                                                     "ON C.PROFESSORID = P.USERID";
     public static final String VIEW_PROFESSOR_QUERY = "select * from professor";
     public static final String VIEW_STUDENT_QUERY = "select * from student";
-    public static final String ADD_PROFESSOR_QUERY = "INSERT INTO PROFESSOR VALUES(?,?)";
+    public static final String ADD_PROFESSOR_QUERY = "INSERT INTO professor VALUES(?,?)";
+    public static final String ADD_STUDENT_QUERY = "INSERT INTO student VALUES(?,?,?,?)";
     public static final String ADD_COURSE_QUERY = "insert into `jedi`.`course` (`CID`,`COURSENAME`) values(?,?)";
 
     //USER Queries

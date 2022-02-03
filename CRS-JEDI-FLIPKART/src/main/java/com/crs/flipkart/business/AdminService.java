@@ -5,7 +5,9 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.AdminDaoOperation;
+import com.crs.flipkart.exception.InvalidStudentIdException;
 import com.crs.flipkart.exception.ProfessorNotAddedException;
+import com.crs.flipkart.exception.StudentNotAddedException;
 import com.crs.flipkart.exception.UserIdAlreadyInUseException;
 import org.apache.log4j.Logger;
 
@@ -22,6 +24,10 @@ public class AdminService implements AdminInterface{
     @Override
     public Boolean addProfessor(Professor professor) throws UserIdAlreadyInUseException, ProfessorNotAddedException {
         return  adminDaoOperation.addProfessor(professor);
+    }
+
+    public Boolean addStudent(Student student) throws UserIdAlreadyInUseException, StudentNotAddedException {
+        return  adminDaoOperation.addStudent(student);
     }
 
     @Override
@@ -42,8 +48,8 @@ public class AdminService implements AdminInterface{
     }
 
     @Override
-    public String approveStudentRegistration(Student student) {
-        return null;
+    public boolean approveStudentRegistration(String studentId) throws InvalidStudentIdException {
+        return adminDaoOperation.approveStudentRegistration(studentId);
     }
 
     @Override

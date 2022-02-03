@@ -2,13 +2,12 @@ package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.business.AdminInterface;
+import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.constants.SqlQueriesConstants;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
-import com.crs.flipkart.exception.CourseIdAlreadyInUseException;
-import com.crs.flipkart.exception.ProfessorNotAddedException;
-import com.crs.flipkart.exception.RegistrationUnsuccessful;
-import com.crs.flipkart.exception.UserIdAlreadyInUseException;
+import com.crs.flipkart.exception.*;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
@@ -187,6 +186,47 @@ public class AdminDaoOperation implements AdminDaoInterface{
         return false;
     }
 
+    public boolean addStudent(Student student) throws UserIdAlreadyInUseException, StudentNotAddedException {
+        statement = null;
+        try {
+            String sql1 = SqlQueriesConstants.ADD_USER_QUERY;
+            String sql2 = SqlQueriesConstants.ADD_STUDENT_QUERY;
+            String sql3 = SqlQueriesConstants.INSERT_PERSONALDETAILS_QUERY;
+
+            statement = connection.prepareStatement(sql1);
+            statement.setString(1,student.getUserId());
+            statement.setString(2,student.getPassword());
+            statement.setString(3,student.getRole());
+            int status = statement.executeUpdate();
+            if(status <= 0)
+                throw new UserIdAlreadyInUseException();
+
+            statement = connection.prepareStatement(sql2);
+            statement.setString(1,student.getUserId());
+            statement.setString(2,student.getRollNo());
+            statement.setString(3,student.getDepartment());
+            statement.setString(4,String.valueOf(1));
+            status = statement.executeUpdate();
+            if(status<=0)
+                throw new StudentNotAddedException();
+
+            statement = connection.prepareStatement(sql3);
+            statement.setString(1,student.getPd().getName());
+            statement.setString(2,student.getPd().getPhoneNo());
+            statement.setString(3,student.getPd().getAddress());
+            statement.setString(4,student.getUserId());
+            status = statement.executeUpdate();
+            if(status<=0)
+                throw new SQLException();
+            else
+                return true;
+
+        } catch (SQLException se){
+            logger.error(se.getMessage());
+        }
+        return false;
+    }
+
     @Override
     public Boolean addCourse(Course course) {
         statement = null;
@@ -207,5 +247,9 @@ public class AdminDaoOperation implements AdminDaoInterface{
             logger.error(se.getMessage());
         }
         return false;
+    }
+
+    public Boolean approveStudentRegistration(String studentId) {
+        return true;
     }
 }
