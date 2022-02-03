@@ -27,6 +27,10 @@ public class Student extends User {
         this.yearOfJoining = yearOfJoining;
     }
 
+    public Student() {
+
+    }
+
     /**
      *
      * @return

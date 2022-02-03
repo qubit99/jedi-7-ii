@@ -1,5 +1,7 @@
 package com.crs.flipkart.dao;
 
+import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.constants.SqlQueriesConstants;
 import com.crs.flipkart.exception.UserNotFoundException;
 import com.crs.flipkart.exception.WrongPasswordException;
@@ -99,5 +101,34 @@ public class UserDaoOperation implements UserDaoInterface{
             logger.error(se.getMessage());
         }
         return role;
+    }
+
+    @Override
+    public PersonalDetails getPersonalDetails(String userId) {
+        PersonalDetails pd = new PersonalDetails();
+        statement = null;
+        try {
+
+            String sql = SqlQueriesConstants.GET_PERSONALDETAILS_QUERY;
+            statement = connection.prepareStatement(sql);
+            statement.setString(1,userId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+
+                pd.setName(resultSet.getString("NAME"));
+                pd.setPhoneNo(resultSet.getString("PHONE"));
+                pd.setAddress(resultSet.getString("ADDRESS"));
+
+            }
+
+        }catch(SQLException se) {
+
+            logger.error(se.getMessage());
+
+        }
+
+        return pd;
+
     }
 }
