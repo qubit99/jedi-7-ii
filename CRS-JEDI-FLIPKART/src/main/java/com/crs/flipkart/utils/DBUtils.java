@@ -22,7 +22,7 @@ public class DBUtils {
             try {
                 Properties prop = new Properties();
 
-                InputStream inputStream = new FileInputStream("/Users/avantika.parihar/jedi-7-ii/CRS-JEDI-FLIPKART/src/main/java/config.properties");
+                InputStream inputStream = new FileInputStream("D:\\JEDI-7-ii\\day1\\CRS-JEDI-FLIPKART\\src\\main\\java\\config.properties");
 
                 prop.load(inputStream);
                 String driver = prop.getProperty("driver");
