@@ -18,4 +18,6 @@ public interface StudentInterface {
     public String getRollNo(String userId);
     public ArrayList<Notification> getNotifications(String rollNo);
     public void payFees(String rollNo);
+
+    boolean isApproved(String id);
 }

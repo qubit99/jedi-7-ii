@@ -70,9 +70,9 @@ public class CRSApplication {
         String userPass = scanner.next();
 
         UserInterface user = new UserService();
+        StudentInterface student = new StudentService();
 
         try {
-            String rollNo = new String();
             user.verifyCredentials(userId, userPass);
             String role = user.getRole(userId);
 
@@ -90,9 +90,14 @@ public class CRSApplication {
                 clientAdmin.adminChoice(userId);
             }
             else if(role.equals("Student")) {
-                CRSStudentMenu clientStudent = new CRSStudentMenu();
-                rollNo = (new StudentService()).getRollNo(userId);
-                clientStudent.CRSStudentMenu(rollNo,userId);
+                if(student.isApproved(userId)) {
+                    CRSStudentMenu clientStudent = new CRSStudentMenu();
+                    String rollNo = (new StudentService()).getRollNo(userId);
+                    clientStudent.CRSStudentMenu(rollNo, userId);
+                }
+                else{
+                    System.out.println("You are not approved yet");
+                }
             }
             else if(role.equals("Professor")) {
                 CRSProfessorMenu clientProf = new CRSProfessorMenu();
@@ -131,8 +136,8 @@ public class CRSApplication {
         System.out.println("enter year of joining: ");
         newStudent.setYearOfJoining(scanner.next());
 
-        AdminInterface adminService = new AdminService();
-        adminService.addStudent(newStudent);
+        StudentInterface studentService = new StudentService();
+        studentService.registerStudent(newStudent);
     }
 
     public void updatePassword() {

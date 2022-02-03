@@ -48,6 +48,11 @@ public class StudentService implements StudentInterface{
         }
     }
 
+    @Override
+    public boolean isApproved(String id) {
+        return studentDaoOperation.isApproved(id);
+    }
+
     public void addCourse(String rollNo){
         System.out.println("These are your already enrolled courses");
         ArrayList<Pair<String, String>> courses = studentDaoOperation.getEnrolledCourses(rollNo);

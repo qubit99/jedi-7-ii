@@ -48,13 +48,13 @@ public class AdminService implements AdminInterface{
     }
 
     @Override
-    public boolean approveStudentRegistration(String studentId) throws InvalidStudentIdException {
-        return adminDaoOperation.approveStudentRegistration(studentId);
+    public boolean approveStudentRegistration(String rollNo) throws InvalidStudentIdException {
+        return adminDaoOperation.approveStudentRegistration(rollNo);
     }
 
     @Override
-    public List<Student> viewAllStudents() {
-        return adminDaoOperation.viewAllStudents();
+    public List<Student> viewAllStudents(int flag) {
+        return adminDaoOperation.viewAllStudents(flag);
     }
 
     @Override

@@ -20,13 +20,6 @@ public interface AdminInterface {
      */
     public Boolean addProfessor(Professor professor) throws UserIdAlreadyInUseException, ProfessorNotAddedException;
 
-    /**
-     *
-     * @param student
-     * @return
-     * @throws UserIdAlreadyInUseException
-     */
-    public Boolean addStudent(Student student) throws UserIdAlreadyInUseException, StudentNotAddedException;
 
     /**
      *
@@ -44,17 +37,17 @@ public interface AdminInterface {
 
     /**
      *
-     * @param studentId
+     * @param rollNo
      * @return
      * @throws InvalidStudentIdException
      */
-    public boolean approveStudentRegistration(String studentId) throws InvalidStudentIdException;
+    public boolean approveStudentRegistration(String rollNo) throws InvalidStudentIdException;
 
     /**
      *
      * @return
      */
-    public List<Student> viewAllStudents();
+    public List<Student> viewAllStudents(int flag);
 
     /**
      *

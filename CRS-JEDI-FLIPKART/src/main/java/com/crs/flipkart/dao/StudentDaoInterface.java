@@ -53,4 +53,6 @@ public interface StudentDaoInterface {
      * @return
      */
     public ArrayList<Pair<String,String>> getGradeCard(String rollNo);
+
+    public boolean isApproved(String id);
 }
