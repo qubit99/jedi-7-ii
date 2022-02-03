@@ -21,5 +21,5 @@ public class SqlQueriesConstants {
 
     //PROFESSOR Queries
     public static final String GET_TEACHING_COURSES = "SELECT * FROM Course WHERE professorid=?";
-    public static final String GET_ENROLL_STUDENTS = "SELECT studentid FROM registration WHERE courseid=?";
+    public static final String GET_ENROLL_STUDENTS = "SELECT userid FROM student WHERE rollno IN (SELECT rollno FROM semesterregistration WHERE cid=?)";
 }

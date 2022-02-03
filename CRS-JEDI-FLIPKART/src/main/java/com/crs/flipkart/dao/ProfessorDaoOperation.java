@@ -1,6 +1,7 @@
 package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.SqlQueriesConstants;
 import com.crs.flipkart.exception.InvalidCourseIdException;
@@ -57,7 +58,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
     }
 
     @Override
-    public List<Student> getEnrolledStudents(String profId, String courseId) throws InvalidCourseIdException {
+    public List<PersonalDetails> getEnrolledStudents(String profId, String courseId) throws InvalidCourseIdException {
         Connection conn = null;
         PreparedStatement prep_stmt = null;
         try {
@@ -66,12 +67,12 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
             prep_stmt = conn.prepareStatement(raw_stmt);
             prep_stmt.setString(1, courseId);
             ResultSet result = prep_stmt.executeQuery();
-            List<Student> students = new ArrayList<Student>();
+            List<PersonalDetails> students = new ArrayList<PersonalDetails>();
             while(result.next()) {
                 String studentId = result.getString(1);
-                StudentDaoInterface studentDao = new StudentDaoOperation();
-//                Student studentDetails = studentDao.getStudentDetails(studentId);
-//                students.add(studentDetails);
+                UserDaoInterface userDao = new UserDaoOperation();
+                PersonalDetails studentDetails = userDao.getPersonalDetails(studentId);
+                students.add(studentDetails);
             }
             return students;
         }catch(SQLException se){
@@ -86,7 +87,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
                 logger.error(se2.getMessage());
             }
         }
-        return new ArrayList<Student>();
+        return new ArrayList<PersonalDetails>();
     }
 
     @Override

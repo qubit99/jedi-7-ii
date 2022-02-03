@@ -1,6 +1,7 @@
 package com.crs.flipkart.application;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.AdminInterface;
 import com.crs.flipkart.business.AdminService;
@@ -49,8 +50,8 @@ public class CRSProfessorMenu {
                 List<Course> courses = profService.viewTeachingCourses(profId);
                 for(Course course : courses){
                     System.out.println(course.getCourseName() + "------------" + course.getCourseId());
-                    List<Student> students = profService.viewEnrolledStudents(profId, course.getCourseId());
-                    students.forEach(student -> System.out.println(student.getPd().getName()));
+                    List<PersonalDetails> students = profService.viewEnrolledStudents(profId, course.getCourseId());
+                    students.forEach(student -> System.out.println(student.getName()));
                 }
             }
             else if(choice==4) {

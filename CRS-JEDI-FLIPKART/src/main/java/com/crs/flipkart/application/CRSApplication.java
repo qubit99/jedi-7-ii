@@ -16,6 +16,12 @@ import org.apache.log4j.BasicConfigurator;
 import java.sql.Connection;
 import java.util.Scanner;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.Month;
+
 public class CRSApplication {
 
     public static Scanner scanner = new Scanner(System.in);
@@ -60,7 +66,7 @@ public class CRSApplication {
     }
 
     public void login() {
-        System.out.println("=====LOGIN=====");
+        System.out.println("==========LOGIN==========");
         System.out.println("Enter your user id: ");
         String userId = scanner.next();
         System.out.println("Enter your password: ");
@@ -71,7 +77,14 @@ public class CRSApplication {
         try {
             String rollNo = new String();
             user.verifyCredentials(userId, userPass);
+            System.out.println("==============================");
             System.out.println("login successful!");
+
+            LocalDateTime current = LocalDateTime.now();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String formatedDateTime = current.format(format);
+            System.out.println("login date and time: " + formatedDateTime);
+
             String role = user.getRole(userId);
             System.out.println("Role: "+role);
             if(role.equals("Admin")) {
@@ -97,7 +110,7 @@ public class CRSApplication {
     }
 
     public void registerNew() {
-        System.out.println("=====NEW STUDENT REGISTRATION=====");
+        System.out.println("==========NEW STUDENT REGISTRATION==========");
         Student newStudent = new Student(null, null, "Student", null, null, null, null);
         PersonalDetails newPd = new PersonalDetails(null, null, null);
 
@@ -125,7 +138,7 @@ public class CRSApplication {
     }
 
     public void updatePassword() {
-        System.out.println("=====PASSWORD UPDATE=====");
+        System.out.println("==========PASSWORD UPDATE==========");
         System.out.println("enter user id");
         String userId = scanner.next();
         System.out.println("enter your old password");
