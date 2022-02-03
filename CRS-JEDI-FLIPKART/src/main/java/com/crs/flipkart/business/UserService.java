@@ -43,6 +43,11 @@ public class UserService implements UserInterface{
         return userDaoOperation.verifyCredentials(userId, password);
     }
 
+    /**
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public String getRole(String userId) {
         return userDaoOperation.getRole(userId);
