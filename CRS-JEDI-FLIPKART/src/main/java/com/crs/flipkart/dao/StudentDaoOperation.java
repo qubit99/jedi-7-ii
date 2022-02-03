@@ -4,44 +4,58 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Notification;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.SqlQueriesConstants;
-import com.crs.flipkart.exception.AddCourseUnsuccessful;
-import com.crs.flipkart.exception.CourseRemovalUnsuccessful;
-import com.crs.flipkart.exception.RegistrationUnsuccessful;
-import com.crs.flipkart.exception.SemesterRegistrationUnsuccessful;
+import com.crs.flipkart.exception.AddCourseUnsuccessfulException;
+import com.crs.flipkart.exception.CourseRemovalUnsuccessfulException;
 import com.crs.flipkart.exception.*;
 import com.crs.flipkart.utils.DBUtils;
 import javafx.util.Pair;
+import org.apache.log4j.Logger;
 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
 public class StudentDaoOperation implements StudentDaoInterface {
 
     Connection conn = DBUtils.getConnection();
+    private static Logger logger = Logger.getLogger(StudentDaoOperation.class);
 
     /**
      *
      * @param st
      */
-    public void registerStudent(Student st) {
+    public Boolean registerStudent(Student st) throws RegistrationUnsuccessfulException ,StudentIdAlreadyInUseException ,UserIdAlreadyInUseException {
 
-        String sql = SqlQueriesConstants.ADD_USER_QUERY;
         try {
+            List<Student> students = (new AdminDaoOperation()).viewAllStudents();
+            ArrayList<String> studentIds = new ArrayList<>();
+            ArrayList<String> userIds = new ArrayList<>();
+
+            students.forEach(student -> {
+                studentIds.add(student.getRollNo());
+                userIds.add(student.getUserId());
+            });
+
+            if(studentIds.contains(st.getRollNo()))
+                throw new StudentIdAlreadyInUseException();
+
+            if(userIds.contains(st.getUserId()))
+                throw new UserIdAlreadyInUseException();
+
+            String sql = SqlQueriesConstants.ADD_USER_QUERY;
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, st.getUserId());
             stmt.setString(2, st.getPassword());
             stmt.setString(3, st.getRole());
             int status = stmt.executeUpdate();
             if (status <= 0)
-                throw new RegistrationUnsuccessful();
+                throw new RegistrationUnsuccessfulException();
 
 
             sql = "INSERT INTO STUDENT VALUES(?,?,?,?)";
@@ -49,12 +63,12 @@ public class StudentDaoOperation implements StudentDaoInterface {
             stmt.setString(1, st.getUserId());
             stmt.setString(2, st.getRollNo());
             stmt.setString(3, st.getDepartment());
-            stmt.setString(4, "0");
+            stmt.setInt(4, 1);
             status = stmt.executeUpdate();
             System.out.println(status);
 
             if (status <= 0)
-                throw new RegistrationUnsuccessful();
+                throw new RegistrationUnsuccessfulException();
 
 
 
@@ -68,14 +82,13 @@ public class StudentDaoOperation implements StudentDaoInterface {
             System.out.println(status);
 
             if (status <= 0)
-                throw new RegistrationUnsuccessful();
+                throw new RegistrationUnsuccessfulException();
 
-            System.out.println("Registration is done successfully");
-            System.out.println("Admin approval is pending");
-
-        } catch (SQLException | RegistrationUnsuccessful e) {
-            System.out.println(e.getMessage());
+            return true;
+        } catch (SQLException  e) {
+            logger.error(e.getMessage());
         }
+        return false;
     }
 
 
@@ -84,7 +97,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
      * @param rollNo
      * @param courseIds
      */
-    public void registerForCourses(String rollNo, ArrayList<String> courseIds){
+    public Boolean registerForCourses(String rollNo, ArrayList<String> courseIds) throws SemesterRegistrationUnsuccessfulException{
         String sql = "INSERT INTO SEMESTERREGISTRATION VALUES(?,?,?,?),(?,?,?,?),(?,?,?,?) ,(?,?,?,?) ,(?,?,?,?) ,(?,?,?,?)";
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -96,11 +109,12 @@ public class StudentDaoOperation implements StudentDaoInterface {
             }
             int status = stmt.executeUpdate();
             if (status <= 0)
-                throw new SemesterRegistrationUnsuccessful();
-            System.out.println("Your Semester Registration was done successfully");
-        } catch (SQLException | SemesterRegistrationUnsuccessful e) {
-            System.out.println(e.getMessage());
+                throw new SemesterRegistrationUnsuccessfulException();
+            return true;
+        } catch (SQLException  e) {
+            logger.error(e.getMessage());
         }
+        return false;
     }
 
     /**
@@ -109,14 +123,16 @@ public class StudentDaoOperation implements StudentDaoInterface {
      */
     public ArrayList<Course> getAllCourses() {
         String sql = "SELECT  * FROM COURSE";
-        ArrayList<Course> courses = new ArrayList<Course>();
+        ArrayList<Course> courses = new ArrayList<>();
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
                 courses.add(new Course(rs.getString(2), rs.getString(1), rs.getString(3)));
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException  e) {
+            logger.error(e.getMessage());
+        } catch (Exception  e) {
+            logger.error(e.getMessage());
         }
         return courses;
     }
@@ -129,16 +145,18 @@ public class StudentDaoOperation implements StudentDaoInterface {
      */
     public ArrayList<Pair<String,String>> getEnrolledCourses(String rollNo){
         String sql = "SELECT ROLLNO , COURSE.CID , COURSE.COURSENAME, GRADE FROM SEMESTERREGISTRATION INNER JOIN COURSE ON COURSE.CID =SEMESTERREGISTRATION.CID WHERE ROLLNO = ?";
-        ArrayList<Pair<String, String>> enrolledCourses = new ArrayList<Pair<String, String>>();
+        ArrayList<Pair<String, String>> enrolledCourses = new ArrayList<>();
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, rollNo);
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
-                enrolledCourses.add(new Pair<String, String>(rs.getString(2), rs.getString(3)));
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+                enrolledCourses.add(new Pair<>(rs.getString(2), rs.getString(3)));
+        } catch (SQLException  e) {
+            logger.error(e.getMessage());
+        } catch (Exception  e) {
+            logger.error(e.getMessage());
         }
         return enrolledCourses;
     }
@@ -149,7 +167,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
      * @param rollNo
      * @param courseId
      */
-    public void addCourse(String rollNo,String courseId){
+    public Boolean addCourse(String rollNo,String courseId) throws AddCourseUnsuccessfulException {
         String sql = "INSERT INTO SEMESTERREGISTRATION VALUES(?,?,?,?)";
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -160,11 +178,12 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
             int status = stmt.executeUpdate();
             if (status <= 0)
-                throw new AddCourseUnsuccessful();
-            System.out.println("Your Course with courseId " + courseId + " was added successfully ");
-        } catch (SQLException | AddCourseUnsuccessful e) {
-            System.out.println(e.getMessage());
+                throw new AddCourseUnsuccessfulException();
+            return true;
+        } catch (SQLException  e) {
+            logger.error(e.getMessage());
         }
+        return false;
     }
 
     /**
@@ -172,7 +191,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
      * @param rollNo
      * @param courseId
      */
-    public void removeCourse(String rollNo, String courseId) {
+    public Boolean removeCourse(String rollNo, String courseId) throws CourseRemovalUnsuccessfulException{
         String sql = "DELETE FROM SEMESTERREGISTRATION WHERE ROLLNO = ? AND CID = ?";
         PreparedStatement stmt = null;
         try {
@@ -181,12 +200,12 @@ public class StudentDaoOperation implements StudentDaoInterface {
             stmt.setString(2, courseId);
             int status = stmt.executeUpdate();
             if (status <= 0)
-                throw new CourseRemovalUnsuccessful();
-            System.out.println("Course with courseId:" + courseId + " was removed successfully");
-
-        } catch (SQLException | CourseRemovalUnsuccessful e) {
-            System.out.println(e.getMessage());
+                throw new CourseRemovalUnsuccessfulException();
+            return true;
+        } catch (SQLException  e) {
+            logger.error(e.getMessage());
         }
+        return false;
     }
 
 
@@ -227,6 +246,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
         String sql = "SELECT ROLLNO FROM STUDENT WHERE USERID = ?";
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,userId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
                 return rs.getString(1);
@@ -252,7 +272,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
         return null;
     }
 
-    public void payFees(String rollNo) throws FeesPaymentUnsuccessfulException {
+    public String payFees(String rollNo) throws FeesPaymentUnsuccessfulException {
         Scanner sc = new Scanner(System.in);
         String paymentMode;
         System.out.println("Press 1: For UPI PAYMENT");
@@ -278,21 +298,14 @@ public class StudentDaoOperation implements StudentDaoInterface {
             int status = stmt.executeUpdate();
             if (status <= 0)
                 throw new FeesPaymentUnsuccessfulException();
-            System.out.println("Fees Payment was successful");
-            LocalDate date = LocalDate.now();
-            LocalTime time = LocalTime.now();
-            String message = new String("Fees Payment with transactionID:" + transactionID + " is done successfully on DATE:" + date.toString() + " and TIME:" + time.toString());
-            System.out.println(message);
-            updateNotification(rollNo, message);
-            System.out.println("Notification of Fees updated successfully");
+            return transactionID;
         } catch (SQLException e) {
             e.getMessage();
-        } catch (NotificationUpdateUnsuccessfulException e) {
-            System.out.println("Notification of Fees::NOT UPDATED");
         }
+        return null;
     }
 
-    public void updateNotification(String rollNo, String message) throws NotificationUpdateUnsuccessfulException {
+    public String updateNotification(String rollNo, String message) throws NotificationUpdateUnsuccessfulException {
         String notificationID = ("NN").concat(Long.toString(100000000 + (long) (Math.random() * (999999999 - 100000000))));
         String sql = "INSERT INTO NOTIFICATION VALUES (?,?,?)";
         try {
@@ -303,8 +316,10 @@ public class StudentDaoOperation implements StudentDaoInterface {
             int status = stmt.executeUpdate();
             if (status <= 0)
                 throw new NotificationUpdateUnsuccessfulException();
+            return notificationID;
         } catch (SQLException e) {
             e.getMessage();
         }
+        return null;
     }
 }

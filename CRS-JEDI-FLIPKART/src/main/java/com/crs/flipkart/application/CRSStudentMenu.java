@@ -4,8 +4,13 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Notification;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
+import com.crs.flipkart.dao.StudentDaoInterface;
+import com.crs.flipkart.dao.StudentDaoOperation;
+import com.crs.flipkart.exception.*;
 import javafx.util.Pair;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -70,7 +75,14 @@ public class CRSStudentMenu {
                     System.out.println("Enter courseId of your 2nd choice");
                     courseId = sc.next();
                     courseIds.add(courseId);
-                    studentInterface.registerForCourses(rollNo,courseIds);
+                    try {
+                        Boolean status = studentInterface.registerForCourses(rollNo, courseIds);
+                        if (status)
+                            System.out.println("Your Semester Registration was done successfully");
+                    }
+                    catch (SemesterRegistrationUnsuccessfulException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 }
                 case 3:{
@@ -79,11 +91,65 @@ public class CRSStudentMenu {
                     break;
                 }
                 case 4:{
-                    studentInterface.addCourse(rollNo);
+                    System.out.println("These are your already enrolled courses");
+                    ArrayList<Pair<String, String>> courses = studentInterface.viewEnrolledCourses(rollNo);
+                    ArrayList<Course> allCourses = studentInterface.viewAllCourses();
+                    ArrayList<String> courseIds = new ArrayList<>();
+                    ArrayList<String> existingCourseIds = new ArrayList<>();
+                    System.out.println("Course ID : Course Name");
+                    for(Pair<String,String> course: courses)
+                        System.out.println(course.getKey() + " - " + course.getValue());
+                    for(Pair<String,String> course : courses)
+                        courseIds.add(course.getKey());
+                    for(Course course : allCourses)
+                        existingCourseIds.add(course.getCourseId());
+                    System.out.println("Enter the courseId you want to add");
+
+                    String courseId = sc.nextLine();
+                    try {
+                        if (!existingCourseIds.contains(courseId))
+                            throw new InvalidCourseIdException();
+                        if (courseIds.contains(courseId))
+                            throw new AlreadyEnrolledInCourseException();
+                        Boolean status = studentInterface.addCourse(rollNo,courseId);
+                        if(status)
+                            System.out.println("Course with courseId:"+ courseId + "was added succesfully to studentId:"+rollNo);
+                        else
+                            throw new AddCourseUnsuccessfulException();
+                    }catch (InvalidCourseIdException | AlreadyEnrolledInCourseException | AddCourseUnsuccessfulException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 }
                 case 5:{
-                    studentInterface.removeCourse(rollNo);
+                    System.out.println("These are your already enrolled courses");
+                    ArrayList<Pair<String, String>> courses = studentInterface.viewEnrolledCourses(rollNo);
+                    ArrayList<Course> allCourses = studentInterface.viewAllCourses();
+                    ArrayList<String> courseIds = new ArrayList<>();
+                    ArrayList<String> existingCourseIds = new ArrayList<>();
+                    System.out.println("Course ID : Course Name");
+                    for(Pair<String,String> course: courses)
+                        System.out.println(course.getKey() + " - " + course.getValue());
+                    for(Pair<String,String> course : courses)
+                        courseIds.add(course.getKey());
+                    for(Course course : allCourses)
+                        existingCourseIds.add(course.getCourseId());
+                    System.out.println("Enter the courseId you want to remove");
+
+                    String courseId = sc.nextLine();
+                    try {
+                        if (!existingCourseIds.contains(courseId))
+                            throw new InvalidCourseIdException();
+                        if (!courseIds.contains(courseId))
+                            throw new StudentNotEnrolledException();
+                        Boolean status = studentInterface.removeCourse(rollNo,courseId);
+                        if(status)
+                            System.out.println("Course with courseId:"+ courseId + "was removed succesfully to studentId:"+rollNo);
+                        else
+                            throw new CourseRemovalUnsuccessfulException();
+                    } catch (StudentNotEnrolledException | InvalidCourseIdException  | CourseRemovalUnsuccessfulException  e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 }
                 case 6:{
@@ -104,16 +170,33 @@ public class CRSStudentMenu {
                         System.out.println("Notification ID:" + notification.getNotificationID());
                         System.out.println("Notification:"+ notification.getMessage());
                     }
+                    break;
                 }
                 case 8:{
-                    studentInterface.payFees(rollNo);
+                    try {
+                        String transactionID = studentInterface.payFees(rollNo);
+                        if(transactionID!= null && !transactionID.isEmpty()){
+                            System.out.println("Fees Payment was successful");
+                            LocalDate date = LocalDate.now();
+                            LocalTime time = LocalTime.now();
+                            String message = new String("Fees Payment with transactionID:" + transactionID + " is done successfully on DATE:" + date.toString() + " and TIME:" + time.toString());
+                            System.out.println(message);
+                            String notificationId = studentInterface.updateNotification(rollNo, message);
+                            if(notificationId!=null && !notificationId.isEmpty()){
+                                System.out.println("Notification of Fees with " + notificationId + " was updated successfully");
+                            }
+                            else
+                                throw new NotificationUpdateUnsuccessfulException();
+                        }
+                    }
+                    catch(FeesPaymentUnsuccessfulException | NotificationUpdateUnsuccessfulException e ) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 }
                 case 9:
                     return ;
             }
-
         }
-
     }
 }
