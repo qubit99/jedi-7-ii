@@ -4,6 +4,7 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.exception.ProfessorNotAddedException;
+import com.crs.flipkart.exception.StudentNotAddedException;
 import com.crs.flipkart.exception.UserIdAlreadyInUseException;
 
 import java.util.List;
@@ -32,6 +33,20 @@ public interface AdminDaoInterface {
      */
     public boolean addProfessor(Professor professor) throws ProfessorNotAddedException, UserIdAlreadyInUseException;
 
+    /**
+     *
+     * @param student
+     * @return
+     * @throws UserIdAlreadyInUseException
+     */
+    public boolean addStudent(Student student) throws UserIdAlreadyInUseException, StudentNotAddedException;
 
-    Boolean addCourse(Course course);
+    /**
+     *
+     * @param course
+     * @return
+     */
+    public Boolean addCourse(Course course);
+
+    public Boolean approveStudentRegistration(String studentId);
 }

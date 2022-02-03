@@ -1,6 +1,7 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 import com.crs.flipkart.dao.ProfessorDaoInterface;
@@ -42,7 +43,7 @@ public class ProfessorService implements ProfessorInterface {
      * @return
      * @throws InvalidCourseIdException
      */
-    public List<Student> viewEnrolledStudents(String profId, String courseId) throws InvalidCourseIdException {
+    public List<PersonalDetails> viewEnrolledStudents(String profId, String courseId) throws InvalidCourseIdException {
         return professorDaoOperation.getEnrolledStudents(profId, courseId);
     }
 

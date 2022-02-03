@@ -8,7 +8,8 @@ public class SqlQueriesConstants {
                                                     "ON C.PROFESSORID = P.USERID";
     public static final String VIEW_PROFESSOR_QUERY = "select * from professor";
     public static final String VIEW_STUDENT_QUERY = "select * from student";
-    public static final String ADD_PROFESSOR_QUERY = "INSERT INTO PROFESSOR VALUES(?,?)";
+    public static final String ADD_PROFESSOR_QUERY = "INSERT INTO professor VALUES(?,?)";
+    public static final String ADD_STUDENT_QUERY = "INSERT INTO student VALUES(?,?,?,?)";
     public static final String ADD_COURSE_QUERY = "insert into `jedi`.`course` (`CID`,`COURSENAME`) values(?,?)";
 
     //USER Queries
@@ -21,5 +22,5 @@ public class SqlQueriesConstants {
 
     //PROFESSOR Queries
     public static final String GET_TEACHING_COURSES = "SELECT * FROM Course WHERE professorid=?";
-    public static final String GET_ENROLL_STUDENTS = "SELECT studentid FROM registration WHERE courseid=?";
+    public static final String GET_ENROLL_STUDENTS = "SELECT userid FROM student WHERE rollno IN (SELECT rollno FROM semesterregistration WHERE cid=?)";
 }
