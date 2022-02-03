@@ -47,7 +47,7 @@ public class CRSAdminMenu {
             }
             else if(choice==2) {
                 System.out.println("All students");
-                ArrayList<Student> students = adminService.viewAllStudents();
+                List<Student> students = adminService.viewAllStudents();
                 students.forEach(student -> System.out.println(student.getUserId()+"--"+student.getPd().getName()+"--"+student.getRollNo()+"--"+student.getDepartment()));
             }
             else if(choice==3) {
