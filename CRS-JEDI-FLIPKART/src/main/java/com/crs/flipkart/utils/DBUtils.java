@@ -16,13 +16,13 @@ public class DBUtils {
 
     public static Connection getConnection() {
 
-        if (connection != null)
-            return connection;
+        if(connection != null) {
+        }
         else {
             try {
                 Properties prop = new Properties();
 
-                InputStream inputStream = new FileInputStream("/Users/avantika.parihar/jedi-7-ii/CRS-JEDI-FLIPKART/src/main/java/config.properties");
+                InputStream inputStream = new FileInputStream("D:\\JEDI-7-ii\\day1\\CRS-JEDI-FLIPKART\\src\\main\\java\\config.properties");
 
                 prop.load(inputStream);
                 String driver = prop.getProperty("driver");
@@ -40,8 +40,8 @@ public class DBUtils {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return connection;
         }
+        return connection;
 
     }
 }

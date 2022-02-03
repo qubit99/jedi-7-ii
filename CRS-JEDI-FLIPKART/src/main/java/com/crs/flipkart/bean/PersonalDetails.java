@@ -12,6 +12,9 @@ public class PersonalDetails {
         this.address = address;
     }
 
+    public PersonalDetails() {
+    }
+
     public String getName() {
         return name;
     }

@@ -3,6 +3,8 @@ package com.crs.flipkart.business;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.exception.ProfessorNotAddedException;
+import com.crs.flipkart.exception.UserIdAlreadyInUseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,7 @@ public interface AdminInterface {
      * @param professor
      * @return
      */
-    public String addProfessor(Professor professor);
+    public Boolean addProfessor(Professor professor) throws UserIdAlreadyInUseException, ProfessorNotAddedException;
 
     /**
      *
@@ -38,9 +40,11 @@ public interface AdminInterface {
     public String approveStudentRegistration(Student student);
 
 
-    public ArrayList<Student> viewAllStudents();
+    public List<Student> viewAllStudents();
 
-    public ArrayList<Professor> viewAllProfessors();
+    public List<Professor> viewAllProfessors();
 
     public List<Course> viewAllCourses();
+
+    public Boolean addCourse(Course course);
 }

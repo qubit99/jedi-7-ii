@@ -1,5 +1,6 @@
 package com.crs.flipkart.dao;
 
+import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.exception.UserNotFoundException;
 import com.crs.flipkart.exception.WrongPasswordException;
 
@@ -28,4 +29,6 @@ public interface UserDaoInterface {
      * @return String denoting role of user
      */
     public String getRole(String userId);
+
+    public PersonalDetails getPersonalDetails(String userId);
 }

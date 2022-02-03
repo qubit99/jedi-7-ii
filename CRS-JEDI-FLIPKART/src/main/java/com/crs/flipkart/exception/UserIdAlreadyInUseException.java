@@ -1,7 +1,7 @@
 package com.crs.flipkart.exception;
 
 public class UserIdAlreadyInUseException extends Exception{
-    UserIdAlreadyInUseException(){}
+    public UserIdAlreadyInUseException(){}
 
     @Override
     public String getMessage(){

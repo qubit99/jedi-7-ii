@@ -20,6 +20,10 @@ public class User {
         this.role = role;
     }
 
+    public User() {
+
+    }
+
     /**
      *
      * @return
