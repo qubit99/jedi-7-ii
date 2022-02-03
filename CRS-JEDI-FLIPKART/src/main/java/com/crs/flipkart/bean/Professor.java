@@ -22,6 +22,11 @@ public class Professor extends User{
         this.designation = designation;
     }
 
+    public Professor() {
+        super();
+        this.setRole("Professor");
+    }
+
     public String getDepartment() {
         return department;
     }

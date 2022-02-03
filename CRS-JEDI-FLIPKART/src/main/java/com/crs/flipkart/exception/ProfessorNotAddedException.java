@@ -3,7 +3,7 @@ package com.crs.flipkart.exception;
 import com.crs.flipkart.bean.Professor;
 
 public class ProfessorNotAddedException extends Exception{
-    ProfessorNotAddedException(){
+    public ProfessorNotAddedException(){
     }
     @Override
     public String getMessage() {

@@ -63,7 +63,7 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES ('C1','CORE JAVA','P1'),('C2','GENETIC ALGORITHMS','P1'),('C3','QUANTUM OPTICS','P2'),('C4','COSMOLOGY 101','P2');
+INSERT INTO `course` VALUES ('C1','CORE JAVA','P1'),('C2','GENETIC ALGORITHMS','P1'),('C3','QUANTUM OPTICS','P2'),('C4','COSMOLOGY 101','P2'),('C5',' Algorithms',NULL),('C6','Big Data',NULL);
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +166,7 @@ CREATE TABLE `personaldetails` (
 
 LOCK TABLES `personaldetails` WRITE;
 /*!40000 ALTER TABLE `personaldetails` DISABLE KEYS */;
-INSERT INTO `personaldetails` VALUES ('MODIJI','101','DILLI','A1'),('Amit Balyan','809','Bangalore','P1'),('HC Verma','211','Kanpur','P2'),('Pranay','998','Jaipur','S1');
+INSERT INTO `personaldetails` VALUES ('MODIJI','101','DILLI','A1'),('Amit Balyan','809','Bangalore','P1'),('HC Verma','211','Kanpur','P2'),('Gaurav Sen','764','Hyderabad','P3'),('Pranay','998','Jaipur','S1');
 /*!40000 ALTER TABLE `personaldetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,7 +191,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES ('P1','CSE'),('P2','Physics');
+INSERT INTO `professor` VALUES ('P1','CSE'),('P2','Physics'),('P3','CSE');
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,7 +271,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('A1','password','Admin'),('P1','profpass','Professor'),('P2','profpass','Professor'),('S1','stud','Student');
+INSERT INTO `user` VALUES ('A1','password','Admin'),('P1','profpass','Professor'),('P2','profpass','Professor'),('P3','profpass','Professor'),('S1','stud','Student');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -284,4 +284,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-02 15:12:49
+-- Dump completed on 2022-02-03 13:30:59

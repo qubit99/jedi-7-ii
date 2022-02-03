@@ -2,6 +2,7 @@ package com.crs.flipkart.dao;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Student;
+import com.crs.flipkart.constants.SqlQueriesConstants;
 import com.crs.flipkart.exception.AddCourseUnsuccessful;
 import com.crs.flipkart.exception.CourseRemovalUnsuccessful;
 import com.crs.flipkart.exception.RegistrationUnsuccessful;
@@ -26,7 +27,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
      */
     public void registerStudent(Student st) {
 
-        String sql = "INSERT INTO USER VALUES(? , ? , ?)";
+        String sql = SqlQueriesConstants.ADD_USER_QUERY;
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1,st.getUserId());
@@ -51,7 +52,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 
 
-            sql = "INSERT INTO PERSONALDETAILS VALUES(?,?,?,?)";
+            sql = SqlQueriesConstants.INSERT_PERSONALDETAILS_QUERY;
             stmt = conn.prepareStatement(sql);
             stmt.setString(1,st.getPd().getName());
             stmt.setString(2,st.getPd().getPhoneNo());
