@@ -7,6 +7,7 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.DummyDB;
 import com.crs.flipkart.business.ProfessorService;
+import com.crs.flipkart.exception.InvalidStudentIdException;
 import com.crs.flipkart.exception.ProfessorNotAddedException;
 import com.crs.flipkart.exception.UserIdAlreadyInUseException;
 
@@ -32,7 +33,7 @@ public class CRSAdminMenu {
         System.out.println("Enter 4 to add course");
         System.out.println("Enter 5 to remove course");
         System.out.println("Enter 6 to add new professor");
-        System.out.println("Enter 7 to view pending student registrations");
+        System.out.println("Enter 7 to approve a student registration");
         System.out.println("Enter 8 to remove student");
         System.out.println("Enter 9 to remove professor");
         System.out.println("Enter 10 to exit");
@@ -41,17 +42,17 @@ public class CRSAdminMenu {
         do {
             choice = scanner.nextInt();
             if(choice==1) {
-                System.out.println("Displaying all Courses: ");
+                System.out.println("Displaying All Courses: ");
                 List<Course> courses = adminService.viewAllCourses();
                 courses.forEach(course -> System.out.println(course.getCourseName() + "------------" + course.getInstructor()));
             }
             else if(choice==2) {
-                System.out.println("All students");
+                System.out.println("Displaying All students: ");
                 List<Student> students = adminService.viewAllStudents();
                 students.forEach(student -> System.out.println(student.getUserId()+"--"+student.getPd().getName()+"--"+student.getRollNo()+"--"+student.getDepartment()));
             }
             else if(choice==3) {
-                System.out.println("All professors");
+                System.out.println("Displaying All professors: ");
                 List<Professor>  professorList = adminService.viewAllProfessors();
                 for(Professor professor: professorList){
                     System.out.println(professor.getUserId() + "--"+ professor.getPd().getName()+"--"+professor.getDepartment());
@@ -99,13 +100,24 @@ public class CRSAdminMenu {
                 }
             }
             else if(choice==7) {
-
+                System.out.println("Approve Student Registration: ");
+                System.out.println("enter student id: ");
+                String sid = scanner.next();
+                try {
+                    adminService.approveStudentRegistration(sid);
+                    System.out.println("Successfully verified student profile");
+                }catch(InvalidStudentIdException ex) {
+                    System.out.println("Invalid student id " + sid + ". Returning to menu");
+                }
             }
 
             else if(choice==8) {
                 break;
             }
             else if(choice==9) {
+
+            }
+            else if(choice==10) {
                 System.out.println("Logged out");
                 return;
             }
