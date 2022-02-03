@@ -37,18 +37,12 @@ public class CRSAdminMenu {
             if(choice==1) {
                 System.out.println("Displaying all Courses: ");
                 List<Course> courses = adminService.viewAllCourses();
-                for(Course course : courses){
-                    System.out.println(course.getCourseName() + "------------" + course.getInstructor());
-                }
+                courses.forEach(course -> System.out.println(course.getCourseName() + "------------" + course.getInstructor()));
             }
             else if(choice==2) {
                 System.out.println("All students");
                 ArrayList<Student> students = adminService.viewAllStudents();
-                for(Student student : students){
-                    System.out.println(student.getPd().getName());
-                }
-
-
+                students.forEach(student -> System.out.println(student.getPd().getName()));
             }
             else if(choice==3) {
                 System.out.println("Drop course: ");

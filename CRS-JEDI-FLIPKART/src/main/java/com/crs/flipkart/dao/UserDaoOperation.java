@@ -21,6 +21,14 @@ public class UserDaoOperation implements UserDaoInterface{
 
     Connection connection = DBUtils.getConnection();
 
+    /**
+     *
+     * @param userId
+     * @param password
+     * @return
+     * @throws UserNotFoundException
+     * @throws WrongPasswordException
+     */
     @Override
     public boolean verifyCredentials(String userId, String password) throws UserNotFoundException, WrongPasswordException {
         statement = null;
@@ -48,6 +56,12 @@ public class UserDaoOperation implements UserDaoInterface{
         return false;
     }
 
+    /**
+     *
+     * @param userId
+     * @param newPassword
+     * @return
+     */
     @Override
     public boolean updatePassword(String userId, String newPassword){
         statement = null;
@@ -64,6 +78,11 @@ public class UserDaoOperation implements UserDaoInterface{
         return false;
     }
 
+    /**
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public String getRole(String userId) {
         statement = null;

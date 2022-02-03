@@ -36,8 +36,7 @@ public class CRSStudentMenu {
                 case 1 : {
                     ArrayList<Course> courses = studentInterface.viewAllCourses();
                     System.out.println("CourseId  : CourseName");
-                    for(Course course : courses)
-                        System.out.println(course.getCourseId() + "  -  " + course.getCourseName());
+                    courses.forEach(course -> System.out.println(course.getCourseId() + "  -  " + course.getCourseName()));
                     break;
                 }
                 case 2 :{
@@ -76,8 +75,7 @@ public class CRSStudentMenu {
                 }
                 case 3:{
                     ArrayList<Pair<String, String>> enrolledCourses = studentInterface.viewEnrolledCourses(rollNo);
-                    for (Pair<String,String> enrolledCourse : enrolledCourses)
-                        System.out.println(enrolledCourse.getKey()+ "  -  " + enrolledCourse.getValue());
+                    enrolledCourses.forEach(enrolledCourse -> System.out.println(enrolledCourse.getKey()+ "  -  " + enrolledCourse.getValue()));
                     break;
                 }
                 case 4:{

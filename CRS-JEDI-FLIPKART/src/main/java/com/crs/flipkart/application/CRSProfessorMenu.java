@@ -7,6 +7,7 @@ import com.crs.flipkart.business.AdminService;
 import com.crs.flipkart.business.ProfessorInterface;
 import com.crs.flipkart.business.ProfessorService;
 import com.crs.flipkart.exception.InvalidCourseIdException;
+import com.crs.flipkart.exception.InvalidGradeException;
 import com.crs.flipkart.exception.ProfessorNotFoundException;
 
 import java.util.ArrayList;
@@ -36,16 +37,12 @@ public class CRSProfessorMenu {
             if(choice==1) {
                 System.out.println("Displaying all courses: ");
                 List<Course> courses = adminService.viewAllCourses();
-                for(Course course : courses){
-                    System.out.println(course.getCourseName() + "------------" + course.getInstructor());
-                }
+                courses.forEach(course -> System.out.println(course.getCourseName() + "------------" + course.getInstructor()));
             }
             else if(choice==2) {
                 System.out.println("Displaying courses that you teach: ");
                 List<Course> courses = profService.viewTeachingCourses(profId);
-                for(Course course : courses){
-                    System.out.println(course.getCourseName() + "------------" + course.getCourseId());
-                }
+                courses.forEach(course -> System.out.println(course.getCourseName() + "------------" + course.getCourseId()));
             }
             else if(choice==3) {
                 System.out.println("Displaying students enrolled under you: ");
@@ -53,14 +50,31 @@ public class CRSProfessorMenu {
                 for(Course course : courses){
                     System.out.println(course.getCourseName() + "------------" + course.getCourseId());
                     List<Student> students = profService.viewEnrolledStudents(profId, course.getCourseId());
-                    for(Student student : students){
-                        System.out.println(student.getPd().getName());
-                    }
+                    students.forEach(student -> System.out.println(student.getPd().getName()));
                 }
             }
             else if(choice==4) {
-                System.out.println("Grade the following courses: ");
-                //profService.giveGrades();
+                System.out.println("Give Grades: ");
+                System.out.println("Enter course id: ");
+                String cid = scanner.next();
+                System.out.println("Enter the grades. Enter 0 to quit.");
+                while(true) {
+                    System.out.println("Enter student id: ");
+                    String sid = scanner.next();
+                    if(sid.equals("0")) {
+                        break;
+                    }
+                    System.out.println("Enter the grade: ");
+                    String sgrade = scanner.next();
+                    if(sgrade.equals("0")) {
+                        break;
+                    }
+                    try {
+                        profService.giveGrades(sid, cid, sgrade);
+                    }catch (InvalidGradeException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             else if(choice==5) {
                 System.out.println("Logged out");
