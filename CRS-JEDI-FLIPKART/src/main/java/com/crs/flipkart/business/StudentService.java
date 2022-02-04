@@ -12,6 +12,7 @@ public class StudentService implements StudentInterface{
     StudentDaoOperation studentDaoOperation = new StudentDaoOperation();
 
 
+
     public Boolean registerForCourses(String rollNo,ArrayList<String> courseIds) throws SemesterRegistrationUnsuccessfulException {
         return studentDaoOperation.registerForCourses(rollNo,courseIds);
     }
@@ -46,7 +47,8 @@ public class StudentService implements StudentInterface{
     }
 
     public Boolean addCourse(String rollNo,String courseId) throws AddCourseUnsuccessfulException {
-        return studentDaoOperation.addCourse(rollNo,courseId);
+        return studentDaoOperation.addCourse(rollNo, courseId);
+    }
     @Override
     public boolean isApproved(String id) {
         return studentDaoOperation.isApproved(id);
@@ -58,6 +60,11 @@ public class StudentService implements StudentInterface{
 
     public Boolean removeCourse(String rollNo,String courseId) throws CourseRemovalUnsuccessfulException {
         return studentDaoOperation.removeCourse(rollNo,courseId);
+    }
+
+    @Override
+    public Boolean registerStudent(Student newStudent) throws StudentIdAlreadyInUseException, RegistrationUnsuccessfulException, UserIdAlreadyInUseException {
+        return studentDaoOperation.registerStudent(newStudent);
     }
 
     public ArrayList<Pair<String, String>> viewGradeCard(String rollNo){

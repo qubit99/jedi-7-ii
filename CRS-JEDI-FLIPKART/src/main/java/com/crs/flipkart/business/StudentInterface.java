@@ -2,12 +2,14 @@ package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Notification;
+import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.exception.*;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 
 public interface StudentInterface {
+    Boolean registerStudent(Student newStudent) throws StudentIdAlreadyInUseException, RegistrationUnsuccessfulException, UserIdAlreadyInUseException;
     public ArrayList<Pair<String,String>> viewGradeCard(String rollNo);
     public Boolean registerForCourses(String rollNo,ArrayList<String> courseIds) throws SemesterRegistrationUnsuccessfulException;
     public ArrayList<Course> viewAllCourses();

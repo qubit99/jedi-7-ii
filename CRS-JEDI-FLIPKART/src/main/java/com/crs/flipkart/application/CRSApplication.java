@@ -75,7 +75,6 @@ public class CRSApplication {
         StudentInterface student = new StudentService();
 
         try {
-            String rollNo;
             user.verifyCredentials(userId, userPass);
             String role = user.getRole(userId);
 
@@ -97,7 +96,7 @@ public class CRSApplication {
                 if(student.isApproved(userId)) {
                     CRSStudentMenu clientStudent = new CRSStudentMenu();
                     String rollNo = (new StudentService()).getRollNo(userId);
-                    clientStudent.CRSStudentMenu(rollNo, userId);
+                    clientStudent.CRSStudentMenu(rollNo);
                 }
                 else{
                     System.out.println("You are not approved yet");
@@ -141,9 +140,9 @@ public class CRSApplication {
         newStudent.setYearOfJoining(scanner.next());
 
 
-        StudentDaoInterface studentDaoInterface = new StudentDaoOperation();
+        StudentInterface studentInterface = new StudentService();
         try {
-            Boolean status = studentDaoInterface.registerStudent(newStudent);
+            Boolean status = studentInterface.registerStudent(newStudent);
             if(status){
                 System.out.println("Registration is done successfully");
                 System.out.println("Admin approval is pending");
