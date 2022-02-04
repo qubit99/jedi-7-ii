@@ -26,9 +26,7 @@ public class AdminService implements AdminInterface{
         return  adminDaoOperation.addProfessor(professor);
     }
 
-    public Boolean addStudent(Student student) throws UserIdAlreadyInUseException, StudentNotAddedException {
-        return  adminDaoOperation.addStudent(student);
-    }
+
 
     @Override
     public String removeProfessor(int professorId) {
