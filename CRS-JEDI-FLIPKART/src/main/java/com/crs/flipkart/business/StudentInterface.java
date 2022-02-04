@@ -19,4 +19,5 @@ public interface StudentInterface {
     public String payFees(String rollNo) throws FeesPaymentUnsuccessfulException;
     public String updateNotification(String rollNo,String message) throws NotificationUpdateUnsuccessfulException;
 
+    boolean isApproved(String id);
 }

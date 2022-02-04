@@ -52,4 +52,6 @@ public interface StudentDaoInterface {
 
     public String updateNotification(String rollNo, String message) throws NotificationUpdateUnsuccessfulException;
 
+
+    public boolean isApproved(String id);
 }

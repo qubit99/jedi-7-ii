@@ -22,7 +22,7 @@ public interface AdminDaoInterface {
      * @return list of all professors
      */
     public List<Professor> viewAllProfessors();
-    public List<Student> viewAllStudents();
+    public List<Student> viewAllStudents(int flag);
 
     /**
      *
@@ -33,13 +33,7 @@ public interface AdminDaoInterface {
      */
     public boolean addProfessor(Professor professor) throws ProfessorNotAddedException, UserIdAlreadyInUseException;
 
-    /**
-     *
-     * @param student
-     * @return
-     * @throws UserIdAlreadyInUseException
-     */
-    public boolean addStudent(Student student) throws UserIdAlreadyInUseException, StudentNotAddedException;
+
 
     /**
      *
@@ -48,5 +42,5 @@ public interface AdminDaoInterface {
      */
     public Boolean addCourse(Course course);
 
-    public Boolean approveStudentRegistration(String studentId);
+    public Boolean approveStudentRegistration(String rollNo);
 }

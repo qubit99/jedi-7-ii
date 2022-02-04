@@ -112,13 +112,14 @@ public class AdminDaoOperation implements AdminDaoInterface{
     }
 
     @Override
-    public List<Student> viewAllStudents() {
+    public List<Student> viewAllStudents(int flag) {
         statement = null;
         List<Student> studentList = new ArrayList<>();
         try {
 
             String sql = SqlQueriesConstants.VIEW_STUDENT_QUERY;
             statement = connection.prepareStatement(sql);
+            statement.setInt(1,flag);
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
@@ -186,46 +187,7 @@ public class AdminDaoOperation implements AdminDaoInterface{
         return false;
     }
 
-    public boolean addStudent(Student student) throws UserIdAlreadyInUseException, StudentNotAddedException {
-        statement = null;
-        try {
-            String sql1 = SqlQueriesConstants.ADD_USER_QUERY;
-            String sql2 = SqlQueriesConstants.ADD_STUDENT_QUERY;
-            String sql3 = SqlQueriesConstants.INSERT_PERSONALDETAILS_QUERY;
 
-            statement = connection.prepareStatement(sql1);
-            statement.setString(1,student.getUserId());
-            statement.setString(2,student.getPassword());
-            statement.setString(3,student.getRole());
-            int status = statement.executeUpdate();
-            if(status <= 0)
-                throw new UserIdAlreadyInUseException();
-
-            statement = connection.prepareStatement(sql2);
-            statement.setString(1,student.getUserId());
-            statement.setString(2,student.getRollNo());
-            statement.setString(3,student.getDepartment());
-            statement.setString(4,String.valueOf(1));
-            status = statement.executeUpdate();
-            if(status<=0)
-                throw new StudentNotAddedException();
-
-            statement = connection.prepareStatement(sql3);
-            statement.setString(1,student.getPd().getName());
-            statement.setString(2,student.getPd().getPhoneNo());
-            statement.setString(3,student.getPd().getAddress());
-            statement.setString(4,student.getUserId());
-            status = statement.executeUpdate();
-            if(status<=0)
-                throw new SQLException();
-            else
-                return true;
-
-        } catch (SQLException se){
-            logger.error(se.getMessage());
-        }
-        return false;
-    }
 
     @Override
     public Boolean addCourse(Course course) {
@@ -249,7 +211,20 @@ public class AdminDaoOperation implements AdminDaoInterface{
         return false;
     }
 
-    public Boolean approveStudentRegistration(String studentId) {
-        return true;
+    public Boolean approveStudentRegistration(String rollNo) {
+        statement = null;
+        try {
+            String sql = SqlQueriesConstants.APPROVE_STUDENT_QUERY;
+            statement = connection.prepareStatement(sql);
+            statement.setString(1,rollNo);
+            int status = statement.executeUpdate();
+            if(status<=0)
+                throw new SQLException();
+            else
+                return true;
+        } catch (SQLException se){
+            logger.info(se.getMessage());
+        }
+        return false;
     }
 }

@@ -228,6 +228,25 @@ public class StudentDaoOperation implements StudentDaoInterface {
         return gradeCard;
     }
 
+    @Override
+    public boolean isApproved(String userId) {
+        String sql = SqlQueriesConstants.IS_APPROVED_QUERY;
+        int isApproved=0;
+        try{
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1,userId);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next())
+                isApproved = resultSet.getInt("ISAPPROVED");
+
+            return isApproved==1?true:false;
+        } catch (SQLException se){
+
+            System.out.println(se.getMessage());
+        }
+        return false;
+    }
+
     public String getRollNo(String userId) {
         String sql = "SELECT ROLLNO FROM STUDENT WHERE USERID = ?";
         try {

@@ -47,7 +47,13 @@ public class StudentService implements StudentInterface{
 
     public Boolean addCourse(String rollNo,String courseId) throws AddCourseUnsuccessfulException {
         return studentDaoOperation.addCourse(rollNo,courseId);
+    @Override
+    public boolean isApproved(String id) {
+        return studentDaoOperation.isApproved(id);
     }
+
+    
+    
 
 
     public Boolean removeCourse(String rollNo,String courseId) throws CourseRemovalUnsuccessfulException {

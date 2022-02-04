@@ -49,7 +49,7 @@ public class CRSAdminMenu {
             }
             else if(choice==2) {
                 System.out.println("Displaying All students: ");
-                List<Student> students = adminService.viewAllStudents();
+                List<Student> students = adminService.viewAllStudents(1);
                 students.forEach(student -> System.out.println(student.getUserId()+"--"+student.getPd().getName()+"--"+student.getRollNo()+"--"+student.getDepartment()));
             }
             else if(choice==3) {
@@ -73,6 +73,9 @@ public class CRSAdminMenu {
 
             }
             else if(choice==5) {
+                System.out.println("Displaying Pending Admissions: ");
+                List<Student> students = adminService.viewAllStudents(0);
+                students.forEach(student -> System.out.println(student.getUserId()+"--"+student.getPd().getName()+"--"+student.getRollNo()+"--"+student.getDepartment()));
 
             }
             else if(choice==6) {
@@ -102,7 +105,9 @@ public class CRSAdminMenu {
             }
             else if(choice==7) {
                 System.out.println("Approve Student Registration: ");
-                System.out.println("enter student id: ");
+                List<Student> students = adminService.viewAllStudents(0);
+                students.forEach(student -> System.out.println(student.getUserId()+"--"+student.getPd().getName()+"--"+student.getRollNo()+"--"+student.getDepartment()));
+                System.out.println("enter student rollno: ");
                 String sid = scanner.next();
                 try {
                     adminService.approveStudentRegistration(sid);
