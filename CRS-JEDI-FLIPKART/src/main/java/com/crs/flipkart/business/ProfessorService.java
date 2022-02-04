@@ -56,7 +56,7 @@ public class ProfessorService implements ProfessorInterface {
        return professorDaoOperation.giveGrades(studentid, profID, courseId, grade);
     }
 
-    public Boolean selectTeachingCourses(String profId, String courseId) throws CourseUpdationFailureException {
+    public Boolean selectTeachingCourses(String profId, String courseId) {
         return professorDaoOperation.selectTeachingCourses(profId,courseId);
     }
 

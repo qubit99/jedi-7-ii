@@ -33,20 +33,6 @@ public class StudentDaoOperation implements StudentDaoInterface {
     public Boolean registerStudent(Student st) throws RegistrationUnsuccessfulException ,StudentIdAlreadyInUseException ,UserIdAlreadyInUseException {
 
         try {
-            List<Student> students = (new AdminDaoOperation()).viewAllStudents();
-            ArrayList<String> studentIds = new ArrayList<>();
-            ArrayList<String> userIds = new ArrayList<>();
-
-            students.forEach(student -> {
-                studentIds.add(student.getRollNo());
-                userIds.add(student.getUserId());
-            });
-
-            if(studentIds.contains(st.getRollNo()))
-                throw new StudentIdAlreadyInUseException();
-
-            if(userIds.contains(st.getUserId()))
-                throw new UserIdAlreadyInUseException();
 
             String sql = SqlQueriesConstants.ADD_USER_QUERY;
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -55,7 +41,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
             stmt.setString(3, st.getRole());
             int status = stmt.executeUpdate();
             if (status <= 0)
-                throw new RegistrationUnsuccessfulException();
+                throw new UserIdAlreadyInUseException();
 
 
             sql = "INSERT INTO STUDENT VALUES(?,?,?,?)";
@@ -63,12 +49,12 @@ public class StudentDaoOperation implements StudentDaoInterface {
             stmt.setString(1, st.getUserId());
             stmt.setString(2, st.getRollNo());
             stmt.setString(3, st.getDepartment());
-            stmt.setInt(4, 1);
+            stmt.setInt(4, 0);
             status = stmt.executeUpdate();
             System.out.println(status);
 
             if (status <= 0)
-                throw new RegistrationUnsuccessfulException();
+                throw new StudentIdAlreadyInUseException();
 
 
 
@@ -128,7 +114,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
-                courses.add(new Course(rs.getString(2), rs.getString(1), rs.getString(3)));
+                courses.add(new Course(rs.getString(1), rs.getString(2), rs.getString(3)));
         } catch (SQLException  e) {
             logger.error(e.getMessage());
         } catch (Exception  e) {
@@ -233,11 +219,11 @@ public class StudentDaoOperation implements StudentDaoInterface {
             }
             ResultSet rs2 = stmt2.executeQuery();
             while (rs2.next()) {
-                gradeCard.add(new Pair<String, String>("SEMESTER", Integer.toString(rs2.getInt(3))));
-                gradeCard.add(new Pair<String, String>("CGPA", rs2.getString(2)));
+                gradeCard.add(new Pair<>("SEMESTER", Integer.toString(rs2.getInt(3))));
+                gradeCard.add(new Pair<>("CGPA", rs2.getString(2)));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return gradeCard;
     }
@@ -250,8 +236,10 @@ public class StudentDaoOperation implements StudentDaoInterface {
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
                 return rs.getString(1);
+            else
+                throw new SQLException();
         } catch (SQLException e) {
-            e.getMessage();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -267,7 +255,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
                 notifications.add(new Notification(rs.getString(2), rs.getString(3), rs.getString(1)));
             return notifications;
         } catch (SQLException e) {
-            e.getMessage();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -300,7 +288,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
                 throw new FeesPaymentUnsuccessfulException();
             return transactionID;
         } catch (SQLException e) {
-            e.getMessage();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -315,11 +303,11 @@ public class StudentDaoOperation implements StudentDaoInterface {
             stmt.setString(3, message);
             int status = stmt.executeUpdate();
             if (status <= 0)
-                throw new NotificationUpdateUnsuccessfulException();
+                throw new SQLException();
             return notificationID;
         } catch (SQLException e) {
-            e.getMessage();
+            logger.error(e.getMessage());
+            throw new NotificationUpdateUnsuccessfulException();
         }
-        return null;
     }
 }

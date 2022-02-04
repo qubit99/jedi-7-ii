@@ -85,7 +85,8 @@ public class CRSProfessorMenu {
                 Scanner sc = new Scanner(System.in);
                 String courseId = sc.nextLine();
                 try {
-                    profService.selectTeachingCourses(profId, courseId);
+                    if(!profService.selectTeachingCourses(profId, courseId))
+                        throw new CourseUpdationFailureException();
                     System.out.println("Course with courseId:" + courseId + " is added successfullly under your teaching courses");
                 }
                 catch(CourseUpdationFailureException e){

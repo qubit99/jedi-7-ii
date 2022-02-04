@@ -34,7 +34,7 @@ public interface ProfessorDaoInterface {
      */
     public Boolean giveGrades(String studentid,String profId, String courseId, String grade);
 
-    public Boolean selectTeachingCourses(String profId, String courseId) throws CourseUpdationFailureException;
+    public Boolean selectTeachingCourses(String profId, String courseId);
 
     public ArrayList<Course> getAvailableCourses();
 

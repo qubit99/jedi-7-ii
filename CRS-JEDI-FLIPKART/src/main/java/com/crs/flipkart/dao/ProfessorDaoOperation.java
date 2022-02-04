@@ -139,18 +139,16 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
         PreparedStatement prep_stmt = null;
         try {
             conn = DBUtils.getConnection();
-            String raw_stmt = "UPDATE course SET PROFESSORID = ? WHERE CID =? ";
+            String raw_stmt = "UPDATE COURSE SET PROFESSORID = ? WHERE CID =? ";
             prep_stmt = conn.prepareStatement(raw_stmt);
             prep_stmt.setString(1, profId);
             prep_stmt.setString(2, courseId);
             int status = prep_stmt.executeUpdate();
             if (status <= 0)
-                throw new CourseUpdationFailureException();
+                throw new SQLException();
             return true;
         } catch (SQLException se) {
             logger.error(se.getMessage());
-        } catch (CourseUpdationFailureException e){
-            logger.error(e.getMessage());
         } catch (Exception e) {
             logger.error(e.getMessage());
         }

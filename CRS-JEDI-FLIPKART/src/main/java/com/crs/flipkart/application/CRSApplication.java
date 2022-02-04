@@ -74,7 +74,7 @@ public class CRSApplication {
         UserInterface user = new UserService();
 
         try {
-            String rollNo = new String();
+            String rollNo;
             user.verifyCredentials(userId, userPass);
             String role = user.getRole(userId);
 
@@ -94,7 +94,8 @@ public class CRSApplication {
             else if(role.equals("Student")) {
                 CRSStudentMenu clientStudent = new CRSStudentMenu();
                 rollNo = (new StudentService()).getRollNo(userId);
-                clientStudent.CRSStudentMenu(rollNo,userId);
+                System.out.println(rollNo);
+                clientStudent.CRSStudentMenu(rollNo);
             }
             else if(role.equals("Professor")) {
                 CRSProfessorMenu clientProf = new CRSProfessorMenu();

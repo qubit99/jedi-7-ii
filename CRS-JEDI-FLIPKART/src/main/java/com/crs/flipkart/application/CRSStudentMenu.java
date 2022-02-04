@@ -4,8 +4,7 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Notification;
 import com.crs.flipkart.business.StudentInterface;
 import com.crs.flipkart.business.StudentService;
-import com.crs.flipkart.dao.StudentDaoInterface;
-import com.crs.flipkart.dao.StudentDaoOperation;
+
 import com.crs.flipkart.exception.*;
 import javafx.util.Pair;
 
@@ -16,7 +15,7 @@ import java.util.Scanner;
 
 public class CRSStudentMenu {
 
-    public void CRSStudentMenu(String userId,String rollNo){
+    public void CRSStudentMenu(String rollNo){
 
 
         StudentInterface studentInterface = new StudentService();
@@ -95,25 +94,26 @@ public class CRSStudentMenu {
                     ArrayList<Pair<String, String>> courses = studentInterface.viewEnrolledCourses(rollNo);
                     ArrayList<Course> allCourses = studentInterface.viewAllCourses();
                     ArrayList<String> courseIds = new ArrayList<>();
-                    ArrayList<String> existingCourseIds = new ArrayList<>();
+                    ArrayList<String> allCourseIds = new ArrayList<>();
                     System.out.println("Course ID : Course Name");
                     for(Pair<String,String> course: courses)
                         System.out.println(course.getKey() + " - " + course.getValue());
                     for(Pair<String,String> course : courses)
                         courseIds.add(course.getKey());
                     for(Course course : allCourses)
-                        existingCourseIds.add(course.getCourseId());
+                        allCourseIds.add(course.getCourseId());
                     System.out.println("Enter the courseId you want to add");
 
-                    String courseId = sc.nextLine();
+
+                    String courseId = sc.next();
                     try {
-                        if (!existingCourseIds.contains(courseId))
+                        if (!allCourseIds.contains(courseId))
                             throw new InvalidCourseIdException();
                         if (courseIds.contains(courseId))
                             throw new AlreadyEnrolledInCourseException();
                         Boolean status = studentInterface.addCourse(rollNo,courseId);
                         if(status)
-                            System.out.println("Course with courseId:"+ courseId + "was added succesfully to studentId:"+rollNo);
+                            System.out.println("Course with courseId:"+ courseId + " was added succesfully to studentId:"+rollNo);
                         else
                             throw new AddCourseUnsuccessfulException();
                     }catch (InvalidCourseIdException | AlreadyEnrolledInCourseException | AddCourseUnsuccessfulException e){
@@ -136,7 +136,7 @@ public class CRSStudentMenu {
                         existingCourseIds.add(course.getCourseId());
                     System.out.println("Enter the courseId you want to remove");
 
-                    String courseId = sc.nextLine();
+                    String courseId = sc.next();
                     try {
                         if (!existingCourseIds.contains(courseId))
                             throw new InvalidCourseIdException();
@@ -144,7 +144,7 @@ public class CRSStudentMenu {
                             throw new StudentNotEnrolledException();
                         Boolean status = studentInterface.removeCourse(rollNo,courseId);
                         if(status)
-                            System.out.println("Course with courseId:"+ courseId + "was removed succesfully to studentId:"+rollNo);
+                            System.out.println("Course with courseId:"+ courseId + " was removed succesfully to studentId:"+rollNo);
                         else
                             throw new CourseRemovalUnsuccessfulException();
                     } catch (StudentNotEnrolledException | InvalidCourseIdException  | CourseRemovalUnsuccessfulException  e){

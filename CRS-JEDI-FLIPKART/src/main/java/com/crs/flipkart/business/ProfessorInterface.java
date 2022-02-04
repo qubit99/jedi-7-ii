@@ -34,7 +34,7 @@ public interface ProfessorInterface {
     public Boolean giveGrades(String studentid,String profID, String courseId, String grade);
 
 
-    public Boolean selectTeachingCourses(String profId, String courseId) throws CourseUpdationFailureException;
+    public Boolean selectTeachingCourses(String profId, String courseId) ;
 
     public ArrayList<Course> viewAvailableCourses();
 }
