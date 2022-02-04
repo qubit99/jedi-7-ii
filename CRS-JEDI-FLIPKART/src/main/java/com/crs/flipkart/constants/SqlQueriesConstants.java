@@ -3,9 +3,7 @@ package com.crs.flipkart.constants;
 public class SqlQueriesConstants {
 
     //ADMIN Queries
-    public static final String VIEW_COURSE_QUERY = "select C.CID, C.COURSENAME, P.NAME " +
-                                                    "from Course C JOIN PERSONALDETAILS P " +
-                                                    "ON C.PROFESSORID = P.USERID";
+    public static final String VIEW_COURSE_QUERY = "select * FROM COURSE " ;
     public static final String VIEW_PROFESSOR_QUERY = "select * from professor";
     public static final String VIEW_STUDENT_QUERY = "select * from student where ISAPPROVED = ?";
     public static final String ADD_PROFESSOR_QUERY = "INSERT INTO professor VALUES(?,?)";
@@ -25,5 +23,5 @@ public class SqlQueriesConstants {
 
     //PROFESSOR Queries
     public static final String GET_TEACHING_COURSES = "SELECT * FROM Course WHERE professorid=?";
-    public static final String GET_ENROLL_STUDENTS = "SELECT userid FROM student WHERE rollno IN (SELECT rollno FROM semesterregistration WHERE cid=?)";
+    public static final String GET_ENROLL_STUDENTS = "SELECT USERID,ROLLNO FROM STUDENT WHERE ROLLNO IN (SELECT rollno FROM SEMESTERREGISTRATION WHERE CID=?)";
 }

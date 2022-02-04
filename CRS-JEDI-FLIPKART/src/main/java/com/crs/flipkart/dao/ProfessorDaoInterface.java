@@ -3,10 +3,10 @@ package com.crs.flipkart.dao;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
-import com.crs.flipkart.exception.InvalidCourseIdException;
-import com.crs.flipkart.exception.InvalidGradeException;
-import com.crs.flipkart.exception.ProfessorNotFoundException;
+import com.crs.flipkart.exception.*;
+import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ProfessorDaoInterface {
@@ -16,16 +16,14 @@ public interface ProfessorDaoInterface {
      * @return
      * @throws ProfessorNotFoundException
      */
-    public List<Course> getTeachingCourses(String profId) throws ProfessorNotFoundException;
+    public List<Course> getTeachingCourses(String profId);
 
     /**
      *
-     * @param profid
      * @param courseId
      * @return
-     * @throws InvalidCourseIdException
      */
-    public List<PersonalDetails> getEnrolledStudents(String profid, String courseId) throws InvalidCourseIdException;
+    public List<Pair<PersonalDetails,String>> getEnrolledStudents(String courseId);
 
     /**
      *
@@ -34,5 +32,12 @@ public interface ProfessorDaoInterface {
      * @param grade
      * @throws InvalidGradeException
      */
-    public void giveGrades(String studentid, String courseId, String grade) throws InvalidGradeException;
+    public Boolean giveGrades(String studentid,String profId, String courseId, String grade);
+
+    public Boolean selectTeachingCourses(String profId, String courseId);
+
+    public ArrayList<Course> getAvailableCourses();
+
+
+
 }
