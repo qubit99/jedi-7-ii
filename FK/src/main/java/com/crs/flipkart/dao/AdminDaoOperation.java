@@ -7,12 +7,10 @@ import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.exception.CourseIdAlreadyInUseException;
 import com.crs.flipkart.exception.ProfessorNotAddedException;
-import com.crs.flipkart.exception.RegistrationUnsuccessful;
 import com.crs.flipkart.exception.UserIdAlreadyInUseException;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
-import javax.jws.soap.SOAPBinding;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

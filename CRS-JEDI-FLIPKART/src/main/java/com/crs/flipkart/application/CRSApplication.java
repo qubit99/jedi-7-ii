@@ -5,6 +5,8 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 
 import com.crs.flipkart.business.*;
+import com.crs.flipkart.dao.StudentDaoInterface;
+import com.crs.flipkart.dao.StudentDaoOperation;
 import com.crs.flipkart.exception.*;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
@@ -90,10 +92,11 @@ public class CRSApplication {
                 clientAdmin.adminChoice(userId);
             }
             else if(role.equals("Student")) {
+
                 if(student.isApproved(userId)) {
                     CRSStudentMenu clientStudent = new CRSStudentMenu();
                     String rollNo = (new StudentService()).getRollNo(userId);
-                    clientStudent.CRSStudentMenu(rollNo, userId);
+                    clientStudent.CRSStudentMenu(rollNo);
                 }
                 else{
                     System.out.println("You are not approved yet");
@@ -112,7 +115,7 @@ public class CRSApplication {
         }
     }
 
-    public void registerNew() throws StudentNotAddedException, UserIdAlreadyInUseException {
+    public void registerNew()  {
         System.out.println("==========NEW STUDENT REGISTRATION==========");
         Student newStudent = new Student(null, null, "Student", null, null, null, null);
         PersonalDetails newPd = new PersonalDetails(null, null, null);
@@ -136,8 +139,18 @@ public class CRSApplication {
         System.out.println("enter year of joining: ");
         newStudent.setYearOfJoining(scanner.next());
 
-        StudentInterface studentService = new StudentService();
-        studentService.registerStudent(newStudent);
+
+        StudentInterface studentInterface = new StudentService();
+        try {
+            Boolean status = studentInterface.registerStudent(newStudent);
+            if(status){
+                System.out.println("Registration is done successfully");
+                System.out.println("Admin approval is pending");
+            }
+        }catch(RegistrationUnsuccessfulException | StudentIdAlreadyInUseException  | UserIdAlreadyInUseException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void updatePassword() {

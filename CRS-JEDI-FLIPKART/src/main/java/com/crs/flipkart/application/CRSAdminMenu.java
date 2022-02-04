@@ -25,21 +25,22 @@ public class CRSAdminMenu {
 
     public void adminChoice(String adminId) {
         AdminService adminService = new AdminService();
-        System.out.println("=====WELCOME TO ADMIN MENU=====");
-        System.out.println("You have the following choices: ");
-        System.out.println("Enter 1 to view all courses");
-        System.out.println("Enter 2 to view all students");
-        System.out.println("Enter 3 to view all professors");
-        System.out.println("Enter 4 to add course");
-        System.out.println("Enter 5 to view pending admissions");
-        System.out.println("Enter 6 to add new professor");
-        System.out.println("Enter 7 to approve a student registration");
-        System.out.println("Enter 8 to remove student");
-        System.out.println("Enter 9 to remove professor");
-        System.out.println("Enter 10 to exit");
+
 
         int choice;
         do {
+            System.out.println("=====WELCOME TO ADMIN MENU=====");
+            System.out.println("You have the following choices: ");
+            System.out.println("Enter 1 to view all courses");
+            System.out.println("Enter 2 to view all students");
+            System.out.println("Enter 3 to view all professors");
+            System.out.println("Enter 4 to add course");
+            System.out.println("Enter 5 to remove course");
+            System.out.println("Enter 6 to add new professor");
+            System.out.println("Enter 7 to approve a student registration");
+            System.out.println("Enter 8 to remove student");
+            System.out.println("Enter 9 to remove professor");
+            System.out.println("Enter 10 to exit");
             choice = scanner.nextInt();
             if(choice==1) {
                 System.out.println("Displaying All Courses: ");
@@ -120,7 +121,12 @@ public class CRSAdminMenu {
                 break;
             }
             else if(choice==9) {
-
+                System.out.println("Enter UserID of professor to remove him/her");
+                int userId = scanner.nextInt();
+                if(adminService.removeProfessor(userId))
+                    System.out.println("Professor removed successfully");
+                else
+                    System.out.println("Failed to remove professor");
             }
             else if(choice==10) {
                 System.out.println("Logged out");
