@@ -18,27 +18,55 @@ public class AdminService implements AdminInterface{
 
     AdminDaoInterface adminDaoOperation =new AdminDaoOperation();
 
+    /**
+     *
+     * @param professor
+     * @return true if prof added successfully
+     * @throws UserIdAlreadyInUseException
+     * @throws ProfessorNotAddedException
+     */
     @Override
     public Boolean addProfessor(Professor professor) throws UserIdAlreadyInUseException, ProfessorNotAddedException {
         return  adminDaoOperation.addProfessor(professor);
     }
 
 
+    /**
+     *
+     * @param professorId
+     * @return true if prof removed successfully
+     */
     @Override
     public Boolean removeProfessor(int professorId) {
         return adminDaoOperation.removeProfessor(professorId);
     }
 
+    /**
+     *
+     * @param professor
+     * @return
+     */
     @Override
     public String updateProfessor(Professor professor) {
         return null;
     }
 
+    /**
+     *
+     * @param rollNo
+     * @return true if student approved successfully
+     * @throws InvalidStudentIdException
+     */
     @Override
     public boolean approveStudentRegistration(String rollNo) throws InvalidStudentIdException {
         return adminDaoOperation.approveStudentRegistration(rollNo);
     }
 
+    /**
+     *
+     * @param flag for approved and unapproved students
+     * @return List<Student>
+     */
     @Override
     public List<Student> viewAllStudents(int flag) {
         return adminDaoOperation.viewAllStudents(flag);

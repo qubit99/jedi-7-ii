@@ -5,4 +5,8 @@ public class NotificationUpdateUnsuccessfulException extends Exception{
 
     }
 
+    @Override
+    public String getMessage() {
+        return "Notification of Fees::NOT UPDATED";
+    }
 }

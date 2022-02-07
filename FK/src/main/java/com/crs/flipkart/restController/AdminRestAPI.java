@@ -2,7 +2,9 @@ package com.crs.flipkart.restController;
 
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
+import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.business.AdminService;
+import com.crs.flipkart.exception.InvalidStudentIdException;
 import com.crs.flipkart.exception.ProfessorNotAddedException;
 import com.crs.flipkart.exception.UserIdAlreadyInUseException;
 
@@ -19,7 +21,7 @@ public class AdminRestAPI {
     AdminService adminService = new AdminService();
 
     @GET
-    @Path("/viewCoursesInCatalogue")
+    @Path("/viewCourses")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Course> viewCoursesInCatalogue() {
 
@@ -79,6 +81,34 @@ public class AdminRestAPI {
     }
 
 
+    @GET
+    @Path("/viewPendingAdmissions")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Student> viewPendingAdmissions(){
+        return adminService.viewAllStudents(0);
+    }
 
+    @GET
+    @Path("/viewAdmissions")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Student> viewAdmissions(){
+        return adminService.viewAllStudents(1);
+    }
+
+    @GET
+    @Path("/approveStudent")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response approveStudent(@QueryParam("rollNo") String rollNo){
+        try {
+            if(adminService.approveStudentRegistration(rollNo)){
+                return Response.status(201).entity("Student with roll no" + rollNo + " approved").build();
+            }
+            else
+                return Response.status(403).entity("Student with roll no" + rollNo + " not approved").build();
+        } catch (InvalidStudentIdException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

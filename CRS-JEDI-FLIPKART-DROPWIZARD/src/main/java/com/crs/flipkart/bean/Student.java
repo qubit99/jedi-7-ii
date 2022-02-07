@@ -113,4 +113,14 @@ public class Student extends User {
     public int hashCode() {
         return Objects.hash(pd, rollNo, department, yearOfJoining);
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "pd=" + pd +
+                ", rollNo='" + rollNo + '\'' +
+                ", department='" + department + '\'' +
+                ", yearOfJoining='" + yearOfJoining + '\'' +
+                '}';
+    }
 }

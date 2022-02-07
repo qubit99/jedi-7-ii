@@ -5,12 +5,11 @@ import com.crs.flipkart.bean.Professor;
 import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.dao.AdminDaoInterface;
 import com.crs.flipkart.dao.AdminDaoOperation;
+import com.crs.flipkart.exception.InvalidStudentIdException;
 import com.crs.flipkart.exception.ProfessorNotAddedException;
 import com.crs.flipkart.exception.UserIdAlreadyInUseException;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class AdminService implements AdminInterface{
@@ -24,16 +23,10 @@ public class AdminService implements AdminInterface{
         return  adminDaoOperation.addProfessor(professor);
     }
 
-    @Override
-    public String removeProfessor(int professorId) {
-        if(DummyDB.professorList.containsKey(professorId)){
-            DummyDB.professorList.remove(professorId);
-            return "prof removed";
-        }
-        else{
-            return "Prof with given prof id not found";
-        }
 
+    @Override
+    public Boolean removeProfessor(int professorId) {
+        return adminDaoOperation.removeProfessor(professorId);
     }
 
     @Override
@@ -42,13 +35,13 @@ public class AdminService implements AdminInterface{
     }
 
     @Override
-    public String approveStudentRegistration(Student student) {
-        return null;
+    public boolean approveStudentRegistration(String rollNo) throws InvalidStudentIdException {
+        return adminDaoOperation.approveStudentRegistration(rollNo);
     }
 
     @Override
-    public List<Student> viewAllStudents() {
-        return adminDaoOperation.viewAllStudents();
+    public List<Student> viewAllStudents(int flag) {
+        return adminDaoOperation.viewAllStudents(flag);
     }
 
     @Override

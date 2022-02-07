@@ -6,10 +6,9 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.bean.User;
 import com.crs.flipkart.dao.ProfessorDaoInterface;
 import com.crs.flipkart.dao.ProfessorDaoOperation;
-import com.crs.flipkart.exception.InvalidCourseIdException;
-import com.crs.flipkart.exception.InvalidGradeException;
-import com.crs.flipkart.exception.ProfessorNotFoundException;
-import com.crs.flipkart.exception.UserNotFoundException;
+import com.crs.flipkart.exception.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.util.Pair;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -38,13 +37,12 @@ public class ProfessorService implements ProfessorInterface {
 
     /**
      *
-     * @param profId
      * @param courseId
      * @return
      * @throws InvalidCourseIdException
      */
-    public List<PersonalDetails> viewEnrolledStudents(String profId, String courseId) throws InvalidCourseIdException {
-        return professorDaoOperation.getEnrolledStudents(profId, courseId);
+    public List<Pair<String,String>> viewEnrolledStudents(String courseId) throws InvalidCourseIdException {
+        return professorDaoOperation.getEnrolledStudents(courseId);
     }
 
     /**
@@ -54,7 +52,16 @@ public class ProfessorService implements ProfessorInterface {
      * @param grade
      * @throws InvalidGradeException
      */
-    public void giveGrades(String studentid, String courseId, String grade) throws InvalidGradeException {
-        professorDaoOperation.giveGrades(studentid, courseId, grade);
+    public Boolean giveGrades(String studentid,String profID, String courseId, String grade)  {
+        return professorDaoOperation.giveGrades(studentid, profID, courseId, grade);
+    }
+
+    public Boolean selectTeachingCourses(String profId, String courseId) {
+        return professorDaoOperation.selectTeachingCourses(profId,courseId);
+    }
+
+    @Override
+    public ArrayList<Course> viewAvailableCourses() {
+        return professorDaoOperation.getAvailableCourses();
     }
 }

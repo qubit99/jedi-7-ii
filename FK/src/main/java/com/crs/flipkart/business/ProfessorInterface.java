@@ -1,12 +1,12 @@
 package com.crs.flipkart.business;
 
 import com.crs.flipkart.bean.Course;
+import com.crs.flipkart.bean.PersonalDetails;
 import com.crs.flipkart.bean.Student;
-import com.crs.flipkart.exception.InvalidCourseIdException;
-import com.crs.flipkart.exception.InvalidGradeException;
-import com.crs.flipkart.exception.ProfessorNotFoundException;
-import com.crs.flipkart.exception.UserNotFoundException;
+import com.crs.flipkart.exception.*;
+import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -21,17 +21,20 @@ public interface ProfessorInterface {
 
     /**
      * Function to view enrolled students for a course
-     * @param profid
      * @return List of students enrolled in the course
      * @exception InvalidCourseIdException
      */
-    public List<Student> viewEnrolledStudents(String profid, String courseId) throws InvalidCourseIdException;
+    public List<Pair<String,String>> viewEnrolledStudents(String courseId) throws InvalidCourseIdException;
 
     /**
      * Function to give grades to students
      * @param studentid, Course Id, HashTable of StudentId and Grade given
      * @exception InvalidGradeException
      */
-    public void giveGrades(String studentid, String courseId, String grade) throws InvalidGradeException;
+    public Boolean giveGrades(String studentid,String profID, String courseId, String grade);
 
+
+    public Boolean selectTeachingCourses(String profId, String courseId) ;
+
+    public ArrayList<Course> viewAvailableCourses();
 }

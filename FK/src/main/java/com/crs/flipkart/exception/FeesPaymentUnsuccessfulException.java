@@ -2,6 +2,11 @@ package com.crs.flipkart.exception;
 
 public class FeesPaymentUnsuccessfulException extends Exception{
     public FeesPaymentUnsuccessfulException(){
-        System.out.println("Fees payment was unsuccessful");
+
+    }
+
+    @Override
+    public String getMessage() {
+        return "Fees payment was unsuccessful";
     }
 }

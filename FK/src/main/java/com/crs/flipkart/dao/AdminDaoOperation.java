@@ -5,9 +5,7 @@ import com.crs.flipkart.bean.Student;
 import com.crs.flipkart.constants.SqlQueriesConstants;
 import com.crs.flipkart.bean.Course;
 import com.crs.flipkart.bean.Professor;
-import com.crs.flipkart.exception.CourseIdAlreadyInUseException;
-import com.crs.flipkart.exception.ProfessorNotAddedException;
-import com.crs.flipkart.exception.UserIdAlreadyInUseException;
+import com.crs.flipkart.exception.*;
 import com.crs.flipkart.utils.DBUtils;
 import org.apache.log4j.Logger;
 
@@ -111,13 +109,14 @@ public class AdminDaoOperation implements AdminDaoInterface{
     }
 
     @Override
-    public List<Student> viewAllStudents() {
+    public List<Student> viewAllStudents(int flag) {
         statement = null;
         List<Student> studentList = new ArrayList<>();
         try {
 
             String sql = SqlQueriesConstants.VIEW_STUDENT_QUERY;
             statement = connection.prepareStatement(sql);
+            statement.setInt(1,flag);
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
@@ -185,6 +184,8 @@ public class AdminDaoOperation implements AdminDaoInterface{
         return false;
     }
 
+
+
     @Override
     public Boolean addCourse(Course course) {
         statement = null;
@@ -202,6 +203,41 @@ public class AdminDaoOperation implements AdminDaoInterface{
                 return true;
 
         } catch (SQLException | CourseIdAlreadyInUseException se){
+            logger.error(se.getMessage());
+        }
+        return false;
+    }
+
+    public Boolean approveStudentRegistration(String rollNo) {
+        statement = null;
+        try {
+            String sql = SqlQueriesConstants.APPROVE_STUDENT_QUERY;
+            statement = connection.prepareStatement(sql);
+            statement.setString(1,rollNo);
+            int status = statement.executeUpdate();
+            if(status<=0)
+                throw new SQLException();
+            else
+                return true;
+        } catch (SQLException se){
+            logger.info(se.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean removeProfessor(int professorId) {
+        statement = null;
+        try {
+            String sql = SqlQueriesConstants.DELETE_USER_QUERY;
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,professorId);
+            int status = statement.executeUpdate();
+            if(status<=0)
+                throw new SQLException();
+            else
+                return true;
+        } catch (SQLException se){
             logger.error(se.getMessage());
         }
         return false;

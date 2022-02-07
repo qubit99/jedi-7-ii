@@ -1,40 +1,65 @@
 package com.crs.flipkart.bean;
 
 public class Grade {
-    private String studentId;
-    private int semester;
-    private Course course;
-    private int grade;
+    private String rollNo;
+    private String profId;
+    private String courseId;
+    private String grade;
 
-    public String getStudentId() {
-        return studentId;
+
+
+
+    public Grade(String rollNo, String profId, String courseId, String grade) {
+        this.rollNo = rollNo;
+        this.profId = profId;
+        this.courseId = courseId;
+        this.grade = grade;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public Grade() {
     }
 
-    public int getSemester() {
-        return semester;
+
+
+    public String getProfId() {
+        return profId;
     }
 
-    public void setSemester(int semester) {
-        this.semester = semester;
+    public void setProfId(String profId) {
+        this.profId = profId;
     }
 
-    public Course getCourse() {
-        return course;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
-    public int getGrade() {
+    public String getGrade() {
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public String getRollNo() {
+        return rollNo;
+    }
+
+    public void setRollNo(String rollNo) {
+        this.rollNo = rollNo;
+    }
+
+    @Override
+    public String toString() {
+        return "Grade{" +
+                "rollNo='" + rollNo + '\'' +
+                ", profId='" + profId + '\'' +
+                ", courseId='" + courseId + '\'' +
+                ", grade='" + grade + '\'' +
+                '}';
     }
 }

@@ -21,7 +21,7 @@ public interface AdminDaoInterface {
      * @return list of all professors
      */
     public List<Professor> viewAllProfessors();
-    public List<Student> viewAllStudents();
+    public List<Student> viewAllStudents(int flag);
 
     /**
      *
@@ -33,5 +33,15 @@ public interface AdminDaoInterface {
     public boolean addProfessor(Professor professor) throws ProfessorNotAddedException, UserIdAlreadyInUseException;
 
 
-    Boolean addCourse(Course course);
+
+    /**
+     *
+     * @param course
+     * @return
+     */
+    public Boolean addCourse(Course course);
+
+    public Boolean approveStudentRegistration(String rollNo);
+
+    Boolean removeProfessor(int professorId);
 }
