@@ -1,7 +1,6 @@
 com.crs.flipkart.application
 com.crs.flipkart.bean
 com.crs.flipkart.business
-com.crs.flipkart.client
 com.crs.flipkart.constants
 com.crs.flipkart.dao
 com.crs.flipkart.exception

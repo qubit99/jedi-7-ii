@@ -1,4 +1,5 @@
 package com.crs.flipkart;
+import com.crs.flipkart.restController.ProfessorRestAPI;
 import com.crs.flipkart.restController.StudentRestAPI;
 import com.crs.flipkart.restController.UserRestAPI;
 import io.dropwizard.Application;
@@ -23,7 +24,7 @@ public class App extends Application<Configuration>{
         environment.jersey().register(new AdminRestAPI());
         environment.jersey().register(new UserRestAPI());
         environment.jersey().register(new StudentRestAPI());
-
+        environment.jersey().register(new ProfessorRestAPI());
     }
     public static void main(String[] args) throws Exception {
         BasicConfigurator.configure();
